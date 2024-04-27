@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Shopping cart</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/40f5ff1f80.js" crossorigin="anonymous"></script>
+    <script src="../controllers/shopping_cart.js"></script> <!-- Script para el carrito de compras -->
+
+    <style>
+        .carousel-item img {
+            max-height: 300px;
+        }
+
+        .card-img-top {
+            max-height: 200px;
+            width: auto;
+        }
+
+        .separador {
+            margin-bottom: 30px;
+        }
+
+        .search-bar {
+            width: 500px;
+        }
+
+        .navbar {
+            padding: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <ul class="navbar-nav">
+                <!-- aqui -->
+                <a class="navbar-brand" href="home">E-commerce</a>
+                <div class="collapse navbar-collapse" id="barra">
+                    <form class="d-flex">
+                        <input class="form-control search-bar" type="text" placeholder="Encuentra tu producto aqui">
+                        <button class="btn btn-outline-success" type="submit">Buscar</button>
+                    </form>
+            </ul>
+            <ul class="navbar-nav navright">
+                <li class="nav-item dropdown">
+                <li class="nav-item dropdown">
+                    <a class="nav-link  dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Mi cuenta</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownId">
+                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#Ingresar"><i
+                                class="fa fa-user icon"></i> Ingresar</a>
+                    </div>
+                </li>
+                <div class="dropdown-divider"></div>
+                </li>
+                <li class="nav-item">
+                    <!-- aqui -->
+                    <a class="nav-link " href="shopping_cart"><i class="fa fa-shopping-cart icon"></i>
+                        <span class="cart-badge" id="cart-count"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- -------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+    <!-- -----------------------------------------------------------------------------------------------------------------------------------------   -->
+    <script>
+        document.addEventListener("DOMContentLoaded", ShowCart);
+        document.addEventListener("DOMContentLoaded", ShowTotal);
+    </script>
+    <br><br>
+
+    <div class="row">
+        <div id="shopping" class="col-8">
+        </div>
+        <div id="total" class="col-4" style="border-style: groove;border-color: black; height: 50%;">
+        </div>
+    </div>
+
+    <footer>
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>
