@@ -11,94 +11,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="../controllers/home.js"></script>
+    <script src="../controllers/admin.js"></script>
+    <link rel="stylesheet" href="../views/styles/styles.css">
+
     <style>
-        @font-face {
-            font-family: 'Hammersmith';
-            src: url('font/HammersmithOne-Regular.ttf') format('truetype');
-        }
-
-        /*title style*/
-        .navbar-brand {
-            font-family: 'Hammersmith', sans-serif;
-            font-size: 27px;
-            padding-right: 10px;
-            color: white;
-        }
-
-        @font-face {
-            font-family: 'Space';
-            src: url('font/SpaceGrotesk-VariableFont_wght.ttf') format('truetype');
-        }
-
-        /*search bar style*/
-        .form-control {
-            text-align: left;
-            vertical-align: middle;
-            font-size: 13px;
-            color: #5C5C5C;
-            font-weight: bold;
-            border-radius: 0;
-            height: 27px;
-            background-color: #D9D9D9;
-            /* Set the background color */
-            margin-right: 10px;
-        }
-
-        .custom-button {
-            color: white;
-            background-color: transparent;
-            border: none;
-            font-weight: 500;
-            font-family: 'Space', sans-serif;
-            font-size: 15px;
-            margin-right: 10px;
-
-        }
-
-        body {
-            background-image: url("https://images.unsplash.com/photo-1575672401756-206fe7a54513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
-            background-size: cover;
-            background-position: center center;
-            background-attachment: fixed;
-        }
-
-        .custom-button {
-            color: white;
-            background-color: transparent;
-            border: none;
-            font-weight: 500;
-            font-family: 'Space', sans-serif;
-            font-size: 15px;
-            padding: 5px 15px;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-
-        .custom-button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .bottom-center {
-            position: fixed;
-            bottom: 150px;
-            /* Ajusta la distancia desde la parte inferior */
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: transparent;
-        }
-
-        .custom-bottom-center {
-            color: black;
-            background-color: whitesmoke;
-            border: 2px solid black; /* Establece el borde blanco */
-            border-radius: 30px; /* Hace que el borde sea ovalado */
-            font-weight: 500;
-            font-family: 'Space', sans-serif;
-            font-size: 30px;
-            padding: 5px 15px;
-            margin-right: 10px;
-            cursor: pointer;
-        }
+       
     </style>
 </head>
 
@@ -124,7 +42,7 @@
     </nav>
 
     <div class="bottom-center">
-        <button type="button" class="custom-bottom-center ">Bake with us</button>
+        <button type="button" class="custom-bottom-center" onclick="ShowRegister()">Bake with us </button>
     </div>
 
     <!-- Bootstrap JavaScript Libraries -->

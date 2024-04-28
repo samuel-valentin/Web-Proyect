@@ -137,3 +137,59 @@ function SendShoppingCart() {
         }
     }
 }
+
+// function ShowRegister() {
+//     let registrationDiv = document.createElement("div");
+//     console.log("Call for SHowRegister")
+//     registrationDiv.innerHTML = `
+//         <h2>CREATE AN ACCOUNT</h2>
+//         <p>Already have an account? <a href="#">Log In</a></p>
+//         <form>
+//             <label for="email">EMAIL ADDRESS</label><br>
+//             <input type="email" id="email" name="email"><br>
+//             <label for="password">PASSWORD</label><br>
+//             <input type="password" id="password" name="password"><br>
+//             <label for="username">USERNAME</label><br>
+//             <input type="text" id="username" name="username"><br><br>
+//             <button type="submit" class="custom-bottom-center">Start baking!</button>
+//         </form>
+//     `;
+
+//     Agregar el formulario al final del cuerpo del documento
+//     document.body.appendChild(registrationDiv);
+// }
+
+
+function ShowRegister() {
+    // Crear el contenedor del formulario y agregar el contenido
+    let registrationContainer = document.createElement("div");
+    registrationContainer.classList.add("registration-container");
+    registrationContainer.innerHTML = `
+    <div class="container">
+    <div class="left-half">
+        <img src="https://images.unsplash.com/photo-1487029752779-a0c17b1f5ec9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Pastries" class="registration-image">
+    </div>
+    <div class="right-half">
+        <!-- Aquí va el formulario de registro -->
+        <div class="registration-container">
+            <h2>CREATE AN ACCOUNT</h2>
+            <p>Already have an account? <a href="#">Log In</a></p>
+            <form>
+                <label for="email">EMAIL ADDRESS</label><br>
+                <input type="email" id="email" name="email"><br>
+                <label for="password">PASSWORD</label><br>
+                <input type="password" id="password" name="password"><br>
+                <label for="username">USERNAME</label><br>
+                <input type="text" id="username" name="username"><br><br>
+                <button type="submit" class="custom-bottom-center custom-smaller">Start baking!</button>
+            </form>
+        </div>
+    </div>
+</div>
+    `;
+
+    // Insertar el contenedor del formulario debajo del botón "Bake with us"
+    let button = document.querySelector('.bottom-center');
+    button.parentNode.insertBefore(registrationContainer, button.nextSibling);
+    button.style.display = 'none';
+}
