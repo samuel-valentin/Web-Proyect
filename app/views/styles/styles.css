@@ -1,6 +1,17 @@
 @font-face {
     font-family: 'Hammersmith';
-    src: url('font/HammersmithOne-Regular.ttf') format('truetype');
+    src: url('/font/HammersmithOne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Solway';
+    src: url('/font/Solway-ExtraBold.ttf') format('truetype');
+}
+
+
+@font-face {
+    font-family: 'Space';
+    src: url('/font/SpaceGrotesk-VariableFont_wght.ttf') format('truetype');
 }
 
 /*title style*/
@@ -11,11 +22,6 @@
     color: white;
 }
 
-@font-face {
-    font-family: 'Space';
-    src: url('font/SpaceGrotesk-VariableFont_wght.ttf') format('truetype');
-}
-
 /*search bar style*/
 .form-control {
     text-align: left;
@@ -24,9 +30,8 @@
     color: #5C5C5C;
     font-weight: bold;
     border-radius: 0;
-    height: 27px;
+    height: 30px;
     background-color: #D9D9D9;
-    /* Set the background color */
     margin-right: 10px;
 }
 
@@ -39,89 +44,203 @@
     font-size: 15px;
     margin-right: 10px;
 
+}
+
+#background-caption h1 {
+    font-size: 160px;
+    font-family: 'Hammersmith', sans-serif;
+    font-weight: 550;
+    padding-top: 5%;
+    padding-bottom: 10%;
+}
+
+#background-caption p {
+    font-size: 20px;
+    padding: 3% 0;
+    font-family: 'Solway', sans-serif;
+}
+
+.whitebutton {
+    padding: 13px 28px 13px 28px;
+    color: black;
+    font-size: 18px;
+    background-color: white;
+    font-weight: 600;
+    font-family: 'Space', sans-serif;
+}
+
+.background {
+    background: url(https://images.unsplash.com/photo-1505935428862-770b6f24f629?q=80&w=2067&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D) no-repeat center center;
+    background-size: cover;
+    height: auto;
+    text-align: center;
+    color: white;
+    padding-bottom: 5%;
 }
 
 body {
-    background-image: url("https://images.unsplash.com/photo-1575672401756-206fe7a54513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
+    background-color: #F5F5EF;
 }
 
-.custom-button {
-    color: white;
-    background-color: transparent;
-    border: none;
-    font-weight: 500;
-    font-family: 'Space', sans-serif;
-    font-size: 15px;
-    padding: 5px 15px;
-    margin-right: 10px;
-    cursor: pointer;
-}
-
-.custom-button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.bottom-center {
-    position: fixed;
-    bottom: 150px;
-    /* Ajusta la distancia desde la parte inferior */
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: transparent;
-}
-
-.custom-bottom-center {
-    color: black;
-    background-color: whitesmoke;
-    border: 2px solid black;
-    /* Establece el borde blanco */
-    border-radius: 30px;
-    /* Hace que el borde sea ovalado */
-    font-weight: 500;
-    font-family: 'Space', sans-serif;
-    font-size: 30px;
-    padding: 5px 15px;
-    margin-right: 10px;
-    cursor: pointer;
-}
-
-
-/* --------------------------------------------------------------------- */
-
-/* Estilos para dividir la pantalla en dos partes */
 .container {
-    display: flex;
-    flex-direction: row;
-}
-.left-half {
-    width: 50%;
-    padding: 20px;
-    
-}
-.right-half {
-    width: 50%;
-    padding: 20px;
-    /* border: 20px; */
-    background-color: beige;
-    border-radius: 10px;
-}
-/* Estilos adicionales para el formulario */
-.registration-container {
-    /* background-color: #f9f9f9; */
-    background-color: transparent;
-    padding: 20px;
-    border-radius: 10px;
-}
-/* Estilos para la imagen */
-.registration-image {
-    width: 100%;
-    border-radius: 10px;
+    padding-top: 7%;
+    padding-bottom: 5%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 18px;
+    /* Reduce the gap between grid items */
+    max-width: 95%;
+    /* Set a maximum width for the container */
+    margin: 0 auto;
+    /* Center the container horizontally */
 }
 
-.custom-smaller {
-    font-size: 15px; /* Ajusta el tamaño de fuente del botón */
-    padding: 5px 10px; /* Ajusta el relleno del botón */
+.text-column {
+    grid-column: span 1;
+    /* Span 2 columns for text */
+    max-width: 90%;
+    text-align: justify;
+}
+
+.text-column h2 {
+    font-size: 50px;
+    font-family: 'Hammersmith', sans-serif;
+}
+
+.text-column p {
+    font-size: 17px;
+    font-family: 'Space', sans-serif;
+    font-weight: 600;
+}
+
+.image-box {
+    text-align: center;
+    margin: 0;
+}
+
+.image-box img {
+    max-width: 100%;
+    height: auto;
+}
+
+.image-box p {
+    font-family: 'Hammersmith', sans-serif;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.signUp {
+    display: flex;
+    align-items: left;
+    max-width: 100%;
+    height: 90vh;
+}
+
+.image-signUp img {
+    max-height: 100%;
+}
+
+.text-signUp {
+    padding-left: 5%;
+    display: flex;
+    flex-direction: column; /* Alinear el contenido verticalmente */
+}
+
+.text-signUp h2 {
+    font-size: 50px;
+    font-family: 'Hammersmith', sans-serif;
+}
+
+.text-signUp p {
+    font-size: 17px;
+    font-family: 'Space', sans-serif;
+    font-weight: 600;
+}
+
+.text-signUp a {
+    font-size: 17px;
+    color: black;
+    text-decoration: underline;
+}
+
+#sign {
+    font-size: 20px;
+    font-weight: 599;
+    font-family: 'Hammersmith', sans-serif;
+    padding-top: 30px;
+    margin-bottom: 5px;
+}
+
+#textsigup {
+    padding-bottom: 50px;
+}
+
+#signupbar {
+    height: 37px;
+}
+
+#signupbarlast {
+    height: 37px;
+    margin-bottom: 40px;
+}
+
+#blackbutton {
+    padding: 8px 24px 8px 24px;
+    color: white;
+    font-size: 18px;
+    background-color: black;
+    font-weight: 400;
+    font-family: 'Space', sans-serif;
+    text-decoration: none;
+    border-radius: 0;
+}
+
+.custom-modal {
+    background-color: #F5F5EF;
+}
+
+.modal-content {
+    padding: 0;
+}
+
+.modal-header .close {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+}
+
+#blackbuttonlogin {
+    padding: 4px 28px 4px 28px;
+    color: white;
+    font-size: 16px;
+    background-color: black;
+    font-weight: 400;
+    font-family: 'Space', sans-serif;
+    text-decoration: none;
+    border-radius: 0;
+    margin: 15px
+}
+
+#modaltitle{
+    font-size: 55px;
+    padding-top: 5%;;
+    padding-bottom: 0;
+}
+
+.modal-header{
+    padding-bottom: 0;
+    border: none;
+}
+
+#register{
+    font-size: 20px;
+    font-weight: 599;
+    font-family: 'Hammersmith', sans-serif;
+    padding-top: 5px;
+}
+.modal-body{
+    padding-top: 0;
+}
+#textlogin{
+    padding-bottom: 20px;
 }
