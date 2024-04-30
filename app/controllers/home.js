@@ -209,10 +209,8 @@ function ShowLogIn() {
                     <button id="blackbuttonlogin" type="submit" class="btn btn-success">Log In</button>
                   </div>
                 </div>
-                <p id="textlogin" class="d-flex justify-content-center">Don't have an account?
-                  <a data-dismiss="modal" href="#signUp">
-                      Sign Up
-                  </a>
+                <p id="textlogin" class="d-flex justify-content-center">Don't have an account?  
+                  <a data-dismiss="modal" href="#signUp" onclick="ShowRegister()"> Sign Up</a>
                 </p>
               </form>
             </div>
