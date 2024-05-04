@@ -244,3 +244,46 @@ body {
 #textlogin{
     padding-bottom: 20px;
 }
+
+#favoritesTitle{
+    font-size: 35px;
+    font-family: 'Hammersmith', sans-serif;
+    padding: 20px 0px 10px 60px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.buttonRecipe{
+    color: white;
+    padding: 2px 10px 2px 10px;
+    font-size: 13px;
+    background-color: black;
+    font-family: 'Space', sans-serif;
+    text-decoration: none;
+    border: none;
+    margin-right: 10px;
+}
+
+.buttonDelete{
+    color: white;
+    padding: 2px 20px 2px 20px;
+    font-size: 13px;
+    background-color: #833030;
+    border: none;
+    font-family: 'Space', sans-serif;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.tag{
+    color: black;
+    padding: 2px 30px 2px 30px;
+    font-size: 13px;
+    background-color: #D9D9D9;
+    border: none;
+    font-weight: 500;
+    font-family: 'Space', sans-serif;
+    text-decoration: none;
+    border-radius: 3px;
+    margin-right: 10px;
+}
