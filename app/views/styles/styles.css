@@ -244,3 +244,102 @@ body {
 #textlogin{
     padding-bottom: 20px;
 }
+
+
+
+.about {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    padding-left: 50px;
+    padding-top: 50px;
+}
+
+.about h2{
+    font-size: 40px;
+    font-family: 'Hammersmith', sans-serif;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.image-container {
+    margin-left: 50px;
+    flex: 0 0 33%; /* Cambiado de 25% a 33% */
+    max-height: auto;
+    overflow: hidden;
+    margin-right: 20px; /* Añadido margen derecho para separar la imagen del texto */
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+    max-height: 550px;
+}
+
+.text-container {
+    flex: 1;
+    padding: 10px;
+    text-align: justify;
+    
+}
+
+.text-container p {
+    margin-left: -100px;
+    margin-right: 50px;
+    font-size: 20px;
+    font-family: 'Space', sans-serif;
+    font-weight: 600;
+}
+
+.edit-button {
+    padding: 12px 24px;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: 'Space', sans-serif;
+    border-radius: 10px;
+    background-color: #D9D9D9;
+    border: none;
+    margin-top: 10px;
+}
+
+.username {
+    padding-top: 50px; 
+    padding-left: 50px; 
+    font-family: 
+    'Hammersmith', sans-serif;
+    font-size: 60px;
+}
+
+.text-container2 h1{
+    margin-left: -100px;
+    margin-right: 50px; 
+    font-family: 'Hammersmith', sans-serif;
+    font-size: 40px;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.text-container2 p {
+    margin-left: -100px;
+    margin-right: 50px;
+    padding-top: 50px; 
+    font-size: 30px;
+    font-family: 'Space', sans-serif;
+}
+
+.button-container {
+    display: flex;
+    padding-top: 150px; 
+    margin-left: -100px;
+}
+
+.button-container button {
+    margin-right: 20px; /* Ajusta el margen entre los botones */
+    font-family: 'Space', sans-serif;
+}
