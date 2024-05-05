@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Home Bakes</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="../controllers/home.js"></script>
+    <script src="../controllers/admin.js"></script>
+    <link rel="stylesheet" href="../views/styles/styles.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm" style="background-color: rgb(0, 0, 0);">
+        <a class="navbar-brand" href="#home">HOME BAKES</a>
+        <div class="flex-grow-1">
+            <form class="form-inline my-2 my-sm-0">
+                <input class="form-control col-4" type="text" placeholder="Look for a recipe">
+                <button class="custom-button">Search</button>
+            </form>
+        </div>
+        <div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <button type="button" class="custom-button">Create</button>
+                </li>
+                <li class="nav-item">
+                    <button type="button" class="custom-button">Favorites</button>
+                </li>
+                <li class="nav-item">
+                    <button type="button" class="custom-button">Profile</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+<!--
+    <div class="row" style="padding-left: 60px; padding-top: 40px;">
+        <div style="text-align: center; width: 20%;">
+            <img class="selected-product" src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGJha2VyeXxlbnwwfHwwfHx8MA%3D%3D" alt="..." style="width: 100%;">
+        </div>
+        <div style="width: 60%; padding-left: 2%;">
+            <h4 style="font-size: 26px; font-family: 'Hammersmith'; text-transform: uppercase; text-decoration: underline; text-decoration-thickness: 1px;">Título del Producto</h4>
+            <div>
+                <p style="font-family: 'Space'; font-size: 13px;">Created by <a><b><u>User</u></b></a></p>
+            </div>
+            <div>
+                <button class="tag">Tag</button>
+                <button class="tag">Tag</button>
+            </div>
+            <div style="width: 60%; padding-top:15px; font-family: 'Space';">
+                <p style="font-weight: 650; font-size: 20px;">Ingredients</p>
+                <ul>
+                    <li>Ingredient 1</li>
+                    <li>Ingredient 2</li>
+                    <li>Ingredient 3</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div style="padding-left: 60px; padding-top: 20px; font-family: 'Space';">
+        <p style="font-weight: 650; font-size: 20px;">Instructions</p>
+        <p>Description of recipe</p>
+    </div>
+-->
+    <script>
+        document.addEventListener("DOMContentLoaded", ShowCart);
+        document.addEventListener("DOMContentLoaded", ShowTotal);
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+        </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+        </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>

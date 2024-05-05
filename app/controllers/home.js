@@ -139,6 +139,10 @@ function SendShoppingCart() {
 }
 
 function ShowRegister() {
+    // Comprobar si el contenedor de registro ya existe
+    if (document.getElementById("registrationContainer")) {
+        return; // Detener la ejecución si el contenedor ya existe
+    }
     // Crear el contenedor del formulario y agregar el contenido
     let registrationContainer = document.createElement("section");
     registrationContainer.classList.add("registration-container");
@@ -168,6 +172,13 @@ function ShowRegister() {
 }
 
 function ShowLogIn() {
+    // Comprobar si el modal ya existe
+    let existingModal = document.getElementById("login");
+    if (existingModal) {
+        var modal = new bootstrap.Modal(existingModal);
+        modal.show(); // Mostrar el modal existente
+        return; // Salir de la función si el modal ya existe
+    }
     // Crear el contenedor del modal
     let modalContainer = document.createElement("div");
     modalContainer.classList.add("modal", "fade");
@@ -210,7 +221,7 @@ function ShowLogIn() {
                   </div>
                 </div>
                 <p id="textlogin" class="d-flex justify-content-center">Don't have an account?  
-                  <a data-dismiss="modal" href="#signUp" onclick="ShowRegister()"> Sign Up</a>
+                  <a data-dismiss="modal" href="#signUp" onclick="ShowRegister()">  Sign Up</a>
                 </p>
               </form>
             </div>
@@ -227,4 +238,4 @@ function ShowLogIn() {
   
     // Mostrar el modal
     modal.show();
-  }
+}
