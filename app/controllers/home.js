@@ -139,35 +139,77 @@ function SendShoppingCart() {
 }
 
 function ShowRegister() {
+    // Comprobar si el contenedor del formulario ya existe
+    let existingContainer = document.getElementById("registration-container");
+    if (existingContainer) {
+        console.log("El formulario de registro ya está visible.");
+        // Si ya existe, simplemente hacer scroll hasta ese elemento
+        existingContainer.scrollIntoView({ behavior: "smooth" });
+        return;
+    }
+    
     // Crear el contenedor del formulario y agregar el contenido
     let registrationContainer = document.createElement("section");
+    registrationContainer.id = "registration-container";
     registrationContainer.classList.add("registration-container");
     registrationContainer.innerHTML = `
-    <section aria-labelledby="signUp" role="region">
-        <div id="signUp" class="signUp">
-            <div class="image-signUp">
-                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Your Image" style="max-width: 800px;">
-            </div>
-            <div class="text-signUp">
-                <h2>CREATE AN ACCOUNT</h2>
-                <p id="textsigup">Already have an account? <button type="button" class="blackbuttonlogin" onclick="ShowLogIn()">Log In</button></p>
-                <p id="sign">EMAIL ADDRESS</p>
-                <input id="signupbar" class="form-control col-13" type="text">
-                <p id="sign">PASSWORD</p>
-                <input id="signupbar" class="form-control col-13" type="text">
-                <p id="sign">USERNAME</p>
-                <input id="signupbarlast" class="form-control col-13" type="text">
-                <a href="#LogIn" id="blackbutton">Start baking!</a>
-            </div>
+    <form id="registrationForm" onsubmit="registerUser(event); return false;">
+        <div class="image-signUp">
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Your Image" style="max-width: 800px;">
         </div>
-    </section>
+        <div class="text-signUp">
+            <h2>CREATE AN ACCOUNT</h2>
+            <p id="textsigup">Already have an account? <button type="button" class="blackbuttonlogin" onclick="ShowLogIn()">Log In</button></p>
+            <p id="sign">EMAIL ADDRESS</p>
+            <input id="email" name="email" class="form-control col-13" type="email" required>
+            <p id="sign">PASSWORD</p>
+            <input id="password" name="password" class="form-control col-13" type="password" required>
+            <p id="sign">USERNAME</p>
+            <input id="username" name="username" class="form-control col-13" type="text" required>
+            <button type="submit" id="blackbutton">Start baking!</button>
+        </div>
+    </form>
     `;
 
     // Insertar el contenedor del formulario debajo del botón "Bake with us"
     document.getElementById("dynamic-content").appendChild(registrationContainer);
+    // Hacer scroll hasta el formulario de registro
+    registrationContainer.scrollIntoView({ behavior: "smooth" });    
+}
+
+function registerUser(event) {
+    event.preventDefault();  // Detiene el envío del formulario
+    const data = {
+        name: document.getElementById('username').value,
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value
+    };
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/user/register', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(data));
+
+    xhr.onload = function() {
+        if (xhr.status === 201) {
+            console.log('Registro exitoso');
+            window.location.href = '/profile';
+        } else {
+            console.error('Error en el registro: ' + xhr.responseText);
+        }
+    };
 }
 
 function ShowLogIn() {
+    // Comprobar si el modal ya existe
+    let existingModal = document.getElementById("login");
+    if (existingModal) {
+        var modal = new bootstrap.Modal(existingModal);
+        modal.show(); // Mostrar el modal existente
+        console.log("El modal de inicio de sesión ya está visible.");
+        return; // Salir de la función si el modal ya existe
+    }
+
     // Crear el contenedor del modal
     let modalContainer = document.createElement("div");
     modalContainer.classList.add("modal", "fade");
@@ -227,4 +269,28 @@ function ShowLogIn() {
   
     // Mostrar el modal
     modal.show();
-  }
+}
+
+function closeAndShowSignUp() {
+    $('#login').modal('hide'); // Cierra el modal usando jQuery
+    ShowRegister(); // Llama a ShowRegister para mostrar el formulario y hacer scroll
+}
+
+function loginUser(email, password) {
+    const data = { email, password };
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/user/login', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(data));
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            console.log('Inicio de sesión exitoso');
+            // Redirigir al usuario a la página de perfil o donde sea necesario
+            window.location.href = '/profile';
+        } else {
+            console.error('Error en el inicio de sesión: ' + xhr.responseText);
+        }
+    };
+}

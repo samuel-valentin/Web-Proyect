@@ -11,10 +11,10 @@ app.use('/views',express.static('views'));
 app.use(router);
 
 app.get('/', (req, res) => {
-    console.log("e-commerce app practica 4");
-    res.send("e-commerce app practica 4");
+    console.log("e-commerce app Home Bakes");
+    res.send("e-commerce app Home Bakes");
 });
 
 app.listen(port, () => {
-    console.log("Practica 3 app listening on port " + port);
+    console.log("Home Bakes app listening on port " + port);
 });

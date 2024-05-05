@@ -1,5 +1,5 @@
 {
-  "name": "practica3",
+  "name": "homebakes",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,7 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.3"
+    "bcrypt": "^5.1.1",
+    "express": "^4.18.3",
+    "mongoose": "^8.3.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
