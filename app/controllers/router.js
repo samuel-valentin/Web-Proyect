@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const productRouter = require('../routes/products');
 const adminProductRouter = require('../routes/admin_products');
+const usersRouter = require('../routes/users'); //NUEVA
 const router = express.Router();
 
 function validateAdmin(req, res, next) {
@@ -14,6 +15,7 @@ function validateAdmin(req, res, next) {
 
 router.use('/products', productRouter);
 router.use('/admin/products', validateAdmin, adminProductRouter);
+router.use('/user', usersRouter);
 
 router.get('/',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/home.html")));
 router.get('/home',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/home.html")));

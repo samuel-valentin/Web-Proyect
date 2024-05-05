@@ -140,7 +140,7 @@ function SendShoppingCart() {
 
 function ShowRegister() {
     // Comprobar si el contenedor de registro ya existe
-    if (document.getElementById("registrationContainer")) {
+    if (document.querySelector(".registration-container")) {
         return; // Detener la ejecución si el contenedor ya existe
     }
     // Crear el contenedor del formulario y agregar el contenido
@@ -155,13 +155,13 @@ function ShowRegister() {
             <div class="text-signUp">
                 <h2>CREATE AN ACCOUNT</h2>
                 <p id="textsigup">Already have an account? <button type="button" class="blackbuttonlogin" onclick="ShowLogIn()">Log In</button></p>
-                <p id="sign">EMAIL ADDRESS</p>
-                <input id="signupbar" class="form-control col-13" type="text">
-                <p id="sign">PASSWORD</p>
-                <input id="signupbar" class="form-control col-13" type="text">
-                <p id="sign">USERNAME</p>
-                <input id="signupbarlast" class="form-control col-13" type="text">
-                <a href="#LogIn" id="blackbutton">Start baking!</a>
+                <p id="emailLabel">EMAIL ADDRESS</p>
+                <input id="emailInput" class="form-control col-13" type="text">
+                <p id="passwordLabel">PASSWORD</p>
+                <input id="passwordInput" class="form-control col-13" type="text">
+                <p id="usernameLabel">USERNAME</p>
+                <input id="usernameInput" class="form-control col-13" type="text">                
+                <a href="http://localhost:3000/home" id="blackbutton" onclick='register()'>Start baking!</a>
             </div>
         </div>
     </section>
