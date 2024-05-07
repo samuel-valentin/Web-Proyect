@@ -143,7 +143,7 @@ function ShowRegister() {
     if (document.querySelector(".registration-container")) {
         return; // Detener la ejecución si el contenedor ya existe
     }
-    // Crear el contenedor del formulario y agregar el contenido
+    // Crear el contenedor el formulario y agregar el contenido
     let registrationContainer = document.createElement("section");
     registrationContainer.classList.add("registration-container");
     registrationContainer.innerHTML = `
@@ -161,7 +161,7 @@ function ShowRegister() {
                 <input id="passwordInput" class="form-control col-13" type="text">
                 <p id="usernameLabel">USERNAME</p>
                 <input id="usernameInput" class="form-control col-13" type="text">                
-                <a href="http://localhost:3000/home" id="blackbutton" onclick='register()'>Start baking!</a>
+                <a id="blackbutton" onclick='register()'>Start baking!</a>
             </div>
         </div>
     </section>

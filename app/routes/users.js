@@ -7,8 +7,6 @@ const { read } = require('fs');
 const router = express.Router();
 let app = express();
 
-// const mongoURI = 'mongodb+srv://oscarchiw:HomeBakesDASW@daswproject.ur4wdy7.mongodb.net/HomeBakes';
-// mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect('mongodb+srv://oscarchiw:HomeBakesDASW@daswproject.ur4wdy7.mongodb.net/HomeBakes')
 
 
