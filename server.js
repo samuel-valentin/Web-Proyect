@@ -9,6 +9,7 @@ app.use(express.json());
 app.use(express.static('app'));
 app.use('/views',express.static('views'));
 app.use('/controllers',express.static('controllers'));
+// router.use('/user', usersRouter);
 app.use(router);
 
 app.get('/', (req, res) => {

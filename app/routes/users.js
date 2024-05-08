@@ -16,8 +16,8 @@ db.once('open', function() {
   console.log("Connected successfully to MongoDB");
 });
 
-// router.get('/home',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/home.html")));
 router.get('/home',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/home.html")));
+router.get('/register',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/registro.html")));
 router.get('/login',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/login.html")));
 router.get('/profile',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/userprofile.html")));
 
@@ -31,14 +31,19 @@ const userSchema = new mongoose.Schema({
     name: { type: String },
     email: { type: String},
     password: { type: String},
-    description: { type: String, default: '' },
-    image: { type: String, default: '' }
+    description: { type: String, default: 'Tell us about you!' },
+    image: { type: String, default: 'https://images.unsplash.com/photo-1466921583968-f07aa80c526e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW5jb2duaXRvfGVufDB8fDB8fHwy' }
 });
 
 var User = mongoose.model('users', userSchema);
 
-router.get('/',(req,res) => {
-    res.sendFile(path.resolve(__dirname + "/../views/userprofile.html"));
+router.get('/info',(req,res) => {
+    console.log("Info working!");
+    let token = req.headers['x-token'];
+    console.log("Token: " + token);
+    mongoose.model('users').findOne({ID: token}).then((user) => {
+            res.status(200).send(user);
+    });
 });
 
 router.post('/home',(req,res) => {

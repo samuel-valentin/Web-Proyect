@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="../controllers/home.js"></script>
     <script src="../controllers/admin.js"></script>
-    <script src="../controllers/user.js"></script>
+    <script src="../controllers/UPcontrol.js"></script>
     <link rel="stylesheet" href="../views/styles/styles.css">
 </head>
 
@@ -39,58 +39,7 @@
         </div>
     </nav>
 
-    <section aria-labelledby="signUp" role="region">
-        <h1 class="username">YOUR PROFILE</h1>
-        <h6 style="padding-left: 50px;">Manage how other users see you</h6>
-        <h2 class="username">Chef Test</h2>
-        <div class="profile-info">
-            <div class="image-container">
-                <img
-                    src="https://images.unsplash.com/photo-1654922207993-2952fec328ae?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
-                <br>
-                <button type="button" class="edit-button">Edit</button>
-            </div>
-            <div class="text-container">
-                <p>Hello, fellow baking enthusiasts! I'm Buddy Valastro, but you might know me better as the Cake
-                    Boss. Born into the world of baking, with the rich legacy of Carlo's Bakery in my veins, I've been
-                    immersed in the art of cake making since I could barely see over the counter. My journey has
-                    been one of passion, creativity, and a relentless pursuit of baking perfection.
-                    <br><br>
-                    At the heart of Hoboken, New Jersey, I've taken the reins of our family-run bakery, turning it
-                    into a household name and a destination for cake lovers from around the globe. My mission is
-                    simple: to bring a sprinkle of joy and a dollop of delight into every cake I create, blending
-                    traditional techniques with innovative designs that push the boundaries of edible art.
-                    <br><br>
-                    On this platform, I'm excited to share with you a slice of my world. You'll find recipes that have
-                    been refined through generations, alongside modern creations that have dazzled on television
-                    and at grand events. From sumptuous wedding cakes that tower to the heavens to whimsical
-                    cupcakes that bring out the child in all of us, there's a recipe here for every occasion and skill
-                    level.
-                </p>
-                <button type="button" class="edit-button" style="margin-left: -100px;">Edit</button>
-            </div>
-        </div>
-        <h1 class="username">POSTED RECIPES</h1>
-        <div class="profile-info">
-            <div class="image-container">
-                <img
-                    src="https://images.unsplash.com/photo-1593231060852-5f040ae7df82?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2hvY28lMjBjaGlwJTIwY29va2llc3xlbnwwfHwwfHx8Mg%3D%3D">
-            </div>
-            <div class="text-container2">
-                <h1>CHOCO CHIP COOKIES</h1>
-                <p>Classic flavorful cookies with a small change... No sugar! Enjoy this
-                    chocolate chip cookies with no guilt and share with those who might
-                    prefer a healthy delicious option
-                </p>
-                <button type="button" id="blackbutton" style="margin-left: -100px;">Manage</button>
-                <div class="button-container">
-                    <button type="button" class="edit-button">Cookies</button>
-                    <button type="button" class="edit-button">No sugar</button>
-                    <button type="button" class="edit-button">Low skill</button>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div id="userProfileContainer"></div>
 
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -107,6 +56,11 @@
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            UPDUP();
+        });
     </script>
 
 </body>
