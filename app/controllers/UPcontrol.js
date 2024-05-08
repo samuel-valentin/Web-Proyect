@@ -1,34 +1,39 @@
 function UPDUP() {
   console.log("Entro a la funcion");
-  xhr = new XMLHttpRequest();
+  let token = sessionStorage.getItem("UserValidation");
+  if (!token) {
+      alert("Please log in first");
+      window.location.href = "/login";
+      return;
+  }
+  let xhr = new XMLHttpRequest();
   xhr.open('GET', '/user/info', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.setRequestHeader('x-token', sessionStorage.getItem("IDUser"));
-  let userlogged = sessionStorage.getItem("UserValidation");
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`);
   console.log("Enviando")
   xhr.send();
   xhr.onload = function () {
     if (xhr.status == 200) {
-      let user = JSON.parse(xhr.responseText)[0];
+        const user = JSON.parse(xhr.responseText)[0];
       console.table(user);
       const profileSection = `
-          <section aria-labelledby="signUp" role="region">
-              <h1 class="username">YOUR PROFILE</h1>
-              <h6 style="padding-left: 50px;">Manage how other users see you</h6>
-              <h2 class="username">${user.name}</h2>
-              <div class="profile-info">
-                  <div class="image-container">
-                      <img src="${user.image}">
-                      <br>
-                      <button type="button" class="edit-button">Edit</button>
-                  </div>
-                  <div class="text-container">
-                      <p>${user.bio}</p>
-                      <button type="button" class="edit-button" style="margin-left: -100px;">Edit</button>
-                  </div>
-              </div>
-              <h1 class="username">POSTED RECIPES</h1>
-              <div class="profile-info">
+        <section aria-labelledby="signUp" role="region">
+            <h1 class="username">YOUR PROFILE</h1>
+            <h6 style="padding-left: 50px;">Manage how other users see you</h6>
+            <h2 class="username">${user.name}</h2>
+            <div class="profile-info">
+                <div class="image-container">
+                    <img src="${user.image}">
+                    <br>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+                <div class="text-container">
+                    <p>${user.description}</p>
+                    <button type="button" class="edit-button" style="margin-left: -100px;">Edit</button>
+                </div>
+            </div>
+            <h1 class="username">POSTED RECIPES</h1>
+            <div class="profile-info">
             <div class="image-container">
                 <img
                     src="https://images.unsplash.com/photo-1593231060852-5f040ae7df82?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2hvY28lMjBjaGlwJTIwY29va2llc3xlbnwwfHwwfHx8Mg%3D%3D">
@@ -47,12 +52,15 @@ function UPDUP() {
                 </div>
             </div>
         </div>
-          </section>`;
-      document.getElementById("fill_with_info").innerHTML = profileSection;
-      // document.getElementById("userProfileContainer").innerHTML = profileSection;
+        </section>`;
+        document.getElementById("fill_with_info").innerHTML = profileSection;
+        loadUserRecipes(user.id);
+    } else {
+        console.error("Failed to fetch user profile:", xhr.statusText);
+        alert("Failed to fetch profile information.");
     }
-  }
-};
+  };
+}
 
 
 //  function DelHouse(ID){

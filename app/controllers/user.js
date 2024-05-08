@@ -1,4 +1,20 @@
-function register() {
+function fetchUserProfile() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', '/user/info', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem("UserValidation"));
+    xhr.send();
+    xhr.onload = function () {
+        if (xhr.status == 200) {
+            const user = JSON.parse(xhr.responseText);
+            // Procesar la información del usuario
+        } else {
+            console.error("Error fetching user data:", xhr.responseText);
+        }
+    };
+}
+
+function register(event) {
     let xhr = new XMLHttpRequest();
     xhr.open('POST', '/user/home', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -6,58 +22,56 @@ function register() {
     let email = document.getElementById("emailInput").value;
     let password = document.getElementById("passwordInput").value;
 
-    if (name == undefined || email == undefined || password == undefined) {
-        alert("Debe llenar todos los campos");
+    if (!name || !email || !password) {
+        alert("All fields must be filled out");
         return;
-    } else if (name == "" || email == "" || password == "") {
-        alert("Debe llenar todos los campos");
-        return;
-    } 
-    else {
-        console.log("Hasta aqui llego")
-        let data = "{\"name\":\"" + name + "\",\"email\":\"" + email + "\",\"password\":\"" + password + "\"}";
-        console.table(JSON.parse(data));
-        xhr.send(data);
-        xhr.onload = function () {
-            console.log("Response status:", xhr.status);
-            console.log("Response text:", xhr.responseText);
-            if (xhr.status == 200) {
-                sessionStorage.setItem("UserValidation", xhr.responseText);
-                alert("Usuario registrado correctamente");
-                window.location.href = "http://localhost:3000/userprofile";
-            } else if (xhr.status == 409) {
-                alert("El correo ya esta registrado");
-            } else {
-                alert("Error al registrar usuario");
-            }
-        }
     }
 
-};
+    let data = JSON.stringify({ name, email, password });
 
-// function login(){
-//     xhr = new XMLHttpRequest();
-//     xhr.open('POST','/user/login',true);
-//     xhr.setRequestHeader('Content-Type','application/json');
-//     let email = document.getElementById("email").value;
-//     let password = document.getElementById("password").value;
-//     let data = "{\"email\":\""+email+"\",\"password\":\""+password+"\"}";
-//     console.table(JSON.parse(data));
-//     xhr.send(data);
-//     xhr.onload = function(){
-//         if(xhr.status == 200){
-//             alert("Inicio de sesion correcto");
-//             sessionStorage.setItem("UserValidation",xhr.responseText);
-//             window.location.href = "http://localhost:3000/userprofile";
-//         }
-//         else if(xhr.status == 401){
-//             alert("Contraseña incorrecta");
-//         }
-//         else{
-//             alert("Error al logear usuario");
-//         }
-//     }
-// }
+    xhr.send(data);
+    xhr.onload = function () {
+        if (xhr.status === 201) {
+            alert("Registration successful, please log in.");
+            // Redireccionar al modal de Log In
+            ShowLogIn();
+        } else {
+            alert("Failed to register: " + JSON.parse(xhr.responseText).message);
+        }
+    };
+    xhr.onerror = function () {
+        alert("An error occurred during the registration process.");
+    };
+}
+
+function login(event) {
+    event.preventDefault(); // Detiene el envío normal del formulario
+
+    const email = document.getElementById("emailInputLogin").value;
+    const password = document.getElementById("passwordInputLogin").value;
+
+    fetch('/user/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.token) {
+            sessionStorage.setItem("UserValidation", data.token);
+            alert("Login successful!");
+            window.location.href = "http://localhost:3000/profile";
+        } else {
+            alert("Login failed: " + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error during login:', error);
+        alert("Login failed, please try again.");
+    });
+}
 
 // function ShowUserInfo(){
 //     let xhr = new XMLHttpRequest();

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Home Bakes</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="../controllers/home.js"></script>
+    <script src="../controllers/admin.js"></script>
+    <link rel="stylesheet" href="../views/styles/styles.css">
+    
+
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm" style="background-color: rgb(0, 0, 0);">
+        <a class="navbar-brand" href="/">HOME BAKES</a>
+        <div class="flex-grow-1">
+            <form class="form-inline my-2 my-sm-0">
+                <input class="form-control col-4" type="text" placeholder="Look for a recipe">
+                <button class="custom-button">Search</button>
+            </form>
+        </div>
+        <div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <button type="button" class="custom-button">Create</button>
+                </li>
+                <li class="nav-item">
+                    <button type="button" class="custom-button">Favorites</button>
+                </li>
+                <li class="nav-item">
+                    <button type="button" class="custom-button">Profile</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section aria-labelledby="newRecipe" role="region" class="container-lg p-4">
+        <div>  
+            <div class="row">
+                <div class="text-column col-md-3">
+                    <h2>NEW RECIPE</h2>
+                    <p></p>
+                </div>
+                <div class="col-md-8">
+                    <form class="hstack gap-2" enctype="multipart/form-data" method="post" action="/recipes">
+                        <div class="col-md-12">
+                            <img id="imagePreview" style="height: 250px; display: none;">
+                            <label for="imageUpload" class="form-label">Upload Image</label>
+                            <input type="file" class="form-control" id="imageUpload" name="image" accept="image/*" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" name="description" required rows="5"></textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="ingredients" class="form-label">Ingredients</label>
+                            <div id="ingredients" name="ingredients"></div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="instructions" class="form-label">Instructions</label>
+                            <div id="instructions" name="instructions"></div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary" type="submit">Submit form</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <input type="hidden" name="ingredients" id="hiddenIngredients">
+    <input type="hidden" name="instructions" id="hiddenInstructions">
+    <script>
+        var ingredientsEditor = new Quill('#ingredients', { theme: 'snow' });
+        var instructionsEditor = new Quill('#instructions', { theme: 'snow' });
+        var form = document.querySelector('form');
+        form.onsubmit = function() {
+            document.getElementById('hiddenIngredients').value = ingredientsEditor.root.innerHTML;
+            document.getElementById('hiddenInstructions').value = instructionsEditor.root.innerHTML;
+        };
+    </script>
+    
+    <script>
+          document.getElementById('imageUpload').addEventListener('change', function(event) {
+            var output = document.getElementById('imagePreview');
+            output.style.display = 'block'; // Muestra el elemento de la imagen
+            output.src = URL.createObjectURL(event.target.files[0]); // Establece el src al archivo seleccionado
+            output.onload = function() {
+                URL.revokeObjectURL(output.src) // Libera memoria cuando la imagen no se necesita
+            }
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+        </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+        </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>

@@ -161,7 +161,7 @@ function ShowRegister() {
                 <input id="passwordInput" class="form-control col-13" type="text">
                 <p id="usernameLabel">USERNAME</p>
                 <input id="usernameInput" class="form-control col-13" type="text">                
-                <a id="blackbutton" onclick='register()'>Start baking!</a>
+                <a id="blackbutton" onclick='register(event)'>Start baking!</a>
             </div>
         </div>
     </section>
@@ -200,18 +200,18 @@ function ShowLogIn() {
           <div class="modal-body">
             <div class="container-fluid d-flex flex-column align-items-center">
               <p id="textlogin">Log In to your account and continue baking!</p>
-              <form id="loginForm" class="w-100">
+              <form id="loginForm" class="w-100" onsubmit="login(event)">
                 <div class="form-group">
                   <label for="email" id="register">EMAIL ADDRESS</label>
                   <div class="input-group mb-3">
-                    <input type="text" class="w-100 form-control" name="email" id="email"
+                    <input type="text" class="w-100 form-control" name="email" id="emailInputLogin"
                         aria-describedby="helpId" required>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="password" id="register">PASSWORD</label>
                   <div class="input-group mb-3">
-                    <input type="password" class="w-100 form-control" name="password" id="password"
+                    <input type="password" class="w-100 form-control" name="password" id="passwordInputLogin"
                         aria-describedby="helpId" required>
                   </div>
                 </div>
