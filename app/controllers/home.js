@@ -145,6 +145,7 @@ function ShowRegister() {
     }
     // Crear el contenedor el formulario y agregar el contenido
     let registrationContainer = document.createElement("section");
+    registrationContainer.id = "registration-container";
     registrationContainer.classList.add("registration-container");
     registrationContainer.innerHTML = `
     <section aria-labelledby="signUp" role="region">
@@ -169,6 +170,31 @@ function ShowRegister() {
 
     // Insertar el contenedor del formulario debajo del botón "Bake with us"
     document.getElementById("dynamic-content").appendChild(registrationContainer);
+    // Hacer scroll hasta el formulario de registro
+    registrationContainer.scrollIntoView({ behavior: "smooth" });    
+}
+
+function registerUser(event) {
+    event.preventDefault();  // Detiene el envío del formulario
+    const data = {
+        name: document.getElementById('username').value,
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value
+    };
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/user/register', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(data));
+
+    xhr.onload = function() {
+        if (xhr.status === 201) {
+            console.log('Registro exitoso');
+            window.location.href = '/profile';
+        } else {
+            console.error('Error en el registro: ' + xhr.responseText);
+        }
+    };
 }
 
 function ShowLogIn() {
