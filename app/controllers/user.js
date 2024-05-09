@@ -115,65 +115,6 @@ function login(event) {
     });
 }
 
-// function ShowUserInfo(){
-//     let xhr = new XMLHttpRequest();
-//     let UserInfo = document.getElementById("UserInfo");
-//     xhr.open('GET','/user/info',true);
-//     xhr.setRequestHeader('Content-Type','application/json');
-//     xhr.setRequestHeader('x-token',sessionStorage.getItem("UserValidation"));
-//     xhr.send();
-//     xhr.onload = function(){
-//         if(xhr.status == 200){
-//             let user = JSON.parse(xhr.responseText);
-//             console.table(user);
-//             UserInfo.innerHTML = "\
-//             <div class=\"tab-content\">\
-//                 <table class=\"table table-bordered table-hover\">\
-//                     <tbody>\
-//                         <tr>\
-//                             <td>Nombre</td>\
-//                             <td class='data' id='name'>"+user.name+"</td>\
-//                         </tr>\
-//                         <tr>\
-//                             <td>Correo</td>\
-//                             <td class='data'  id='email'>"+user.email+"</td>\
-//                         </tr>\
-//                         <tr>\
-//                             <td>Fecha de nacimiento</td>\
-//                             <td class='data' id='date'>"+user.date+"</td>\
-//                         </tr>\
-//                         <tr>\
-//                             <td>Descripcion</td>\
-//                             <td class='data' id='description'>"+user.description+"</td>\
-//                         </tr>\
-//                         <tr>\
-//                             <td>Ciudad</td>\
-//                             <td class='data' id='city'>"+user.city+"</td>\
-//                         </tr>\
-//                         <tr>\
-//                             <td>Estado</td>\
-//                             <td class='data'  id='state'>"+user.state+"</td>\
-//                         </tr>\
-//                         <tr>\
-//                             <td>Pais</td>\
-//                             <td class='data' id='country'>"+user.country+"</td>\
-//                         </tr>\
-//                         <tr>\
-//                             <td>Telefono</td>\
-//                             <td class='data' id='phone'>"+user.phone+"</td>\
-//                         </tr>\
-//                     </tbody>\
-//                 </table>\
-//             </div>";
-//             document.getElementById("user_pic").innerHTML = `<img alt="User Pic" src="${user.image}" class="img-fluid rounded-circle" style="max-width: 150px;">`;
-//         }
-//         else{
-//             alert("Debe iniciar sesion para ver su informacion");
-//             window.location.href = "http://localhost:3000/user/login";
-//         }
-//     }
-// }
-
 // function EditUser(){
 //     let editbutton = document.getElementById("editbutton");
 //     editbutton.innerHTML = "\

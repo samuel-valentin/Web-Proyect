@@ -45,27 +45,43 @@ userSchema.pre('save', async function(next) {
 
 var User = mongoose.model('users', userSchema);
 
-router.get('/info', (req, res) => {
-    const token = req.headers['authorization']?.split(' ')[1];
-    if (!token) {
-        return res.status(401).send('Access denied. No token provided.');
-    }
+// router.get('/info', (req, res) => {
+//     const token = req.headers['authorization']?.split(' ')[1];
+//     console.log(token)
+//     if (!token) {
+//         return res.status(401).send('Access denied. No token provided.');
+//     }
 
-    try {
-        const decoded = jwt.verify(token, 'your_jwt_secret');
-        User.findById(decoded.id, (err, user) => {
-            if (err) {
-                return res.status(500).send('Error fetching user.');
-            }
-            if (!user) {
-                return res.status(404).send('User not found.');
-            }
-            res.send(user);
-        });
-    } catch (ex) {
-        res.status(400).send('Invalid token.');
-    }
+//     try {
+//         const decoded = jwt.verify(token, 'your_jwt_secret');
+//         User.findById(decoded.id, (err, user) => {
+//             if (err) {
+//                 return res.status(500).send('Error fetching user.');
+//             }
+//             if (!user) {
+//                 return res.status(404).send('User not found.');
+//             }
+//             res.send(user);
+//         });
+//     } catch (ex) {
+//         res.status(400).send('Invalid token.');
+//     }
+// });
+
+router.get('/info',(req,res) => {
+    console.log("Info working!");
+    let = token = req.headers['authorization']?.split(' ')[1];
+    console.log(token)
+    mongoose.model('users').findOne({_id: token}).then((user) => {
+        if(user == null){
+            res.sendStatus(404);
+        }
+        else{
+            res.status(200).send(user);
+        }
+    });
 });
+
 
 router.post('/home', async (req, res) => {
     const { name, email, password, description, image } = req.body;
@@ -147,6 +163,21 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ message: 'Error during login' });
     }
 });
+
+router.get('/user/getinfo',(req,res) => {
+    const UserID = req.headers['x-token'];
+    console.log(UserID);
+    mongoose.model('users').findOne({ID: UserID}).then((InfoUser) => {
+        if(InfoUser == null){
+            res.sendStatus(404);
+        }
+        else{
+                console.log("voy a mandar info de usuario");
+                res.status(200).send(InfoUser);
+        }
+    });
+});
+
 
 router.put('/profile', authenticate, async (req, res) => {
     try {

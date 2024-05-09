@@ -22,6 +22,7 @@ router.use('/new_recipe', recipesRouter);
 // Ruta base para enviar al home
 router.get('/',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/home.html")));
 router.get('/home',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/home.html")));
+router.get('/views/user/?',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/user_profile.html")));
 
 // Ruta para el perfil de usuario
 router.get('/profile', (req, res) => {

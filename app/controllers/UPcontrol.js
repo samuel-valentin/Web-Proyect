@@ -1,22 +1,26 @@
 function UPDUP() {
-  console.log("Entro a la funcion");
-  let token = sessionStorage.getItem("UserValidation");
-  if (!token) {
-      alert("Please log in first");
-      window.location.href = "/login";
-      return;
-  }
-  let xhr = new XMLHttpRequest();
-  xhr.open('GET', '/user/info', true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.setRequestHeader('Authorization', `Bearer ${token}`);
-  console.log("Enviando")
-  xhr.send();
-  xhr.onload = function () {
-    if (xhr.status == 200) {
-        const user = JSON.parse(xhr.responseText)[0];
-      console.table(user);
-      const profileSection = `
+    console.log("Entro a la funcion");
+    let token = sessionStorage.getItem("user");
+    token = JSON.parse(token);
+    console.log(token)
+    console.log(token._id)
+    if (!token) {
+        alert("Please log in first");
+        window.location.href = "/login";
+        return;
+    }
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', '/user/info', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', `Bearer ${token._id}`);
+    console.log("Enviando")
+    xhr.send();
+    xhr.onload = function () {
+        if (xhr.status == 200) {
+            const user = JSON.parse(xhr.responseText);
+            console.log("Luther:", xhr.responseText);
+            console.table(user);
+            const profileSection = `
         <section aria-labelledby="signUp" role="region">
             <h1 class="username">YOUR PROFILE</h1>
             <h6 style="padding-left: 50px;">Manage how other users see you</h6>
@@ -53,13 +57,14 @@ function UPDUP() {
             </div>
         </div>
         </section>`;
-        document.getElementById("fill_with_info").innerHTML = profileSection;
-        loadUserRecipes(user.id);
-    } else {
-        console.error("Failed to fetch user profile:", xhr.statusText);
-        alert("Failed to fetch profile information.");
-    }
-  };
+            document.getElementById("fill_with_info").innerHTML = profileSection;
+            loadUserRecipes(user.id);
+        } else {
+            console.log(xhr.status)
+            console.error("Failed to fetch user profile:", xhr.statusText);
+            alert("Failed to fetch profile information.");
+        }
+    };
 }
 
 
