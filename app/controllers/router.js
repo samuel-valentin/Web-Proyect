@@ -33,16 +33,17 @@ router.get('/profile', (req, res) => {
     //}
 });
 
-router.get('/views/user/?',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/user_profile.html")));
+
+// router.get('/views/user/?',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/user_profile.html")));
 
 // Ruta para crear receta nueva
 router.get('/new_recipe',(req,res) => {
     // Verificar si el usuario está autenticado antes de enviar el perfil
-    if (!req.headers.authorization) {
-        res.redirect('/login'); // Redirige al login si no está autenticado
-    } else {
-        res.sendFile(path.resolve(__dirname, "/../views/new_recipe.html"));
-    }
+    // if (!req.headers.authorization) {
+    // res.redirect('/login'); // Redirige al login si no está autenticado
+    //} else {
+       return res.sendFile(path.resolve(__dirname +  "/../views/new_recipe.html"));
+    //}
 });
 
 // Ruta para ver una receta específica

@@ -18,12 +18,12 @@ db.once('open', function() {
 router.get('/home',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/home.html")));
 router.get('/register',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/home.html")));
 router.get('/login',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/home.html")));
-router.get('/profile',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/userprofile.html")));
+router.get('/profile',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/user_profile.html")));
 
 
 // Ruta para la visualización de la página de perfil
 router.get('/',(req,res) => {
-    res.sendFile(path.resolve(__dirname + "/../views/userprofile.html"));
+    res.sendFile(path.resolve(__dirname + "/../views/user_profile.html"));
 });
 
 const userSchema = new mongoose.Schema({

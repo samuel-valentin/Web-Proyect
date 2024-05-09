@@ -25,7 +25,7 @@ const recipeSchema = new mongoose.Schema({
     image: { type: String, required: true },
     ingredients: { type: String, required: true },
     instructions: { type: String, required: true },
-    creator: { type: mongoose.Schema.Types.ObjectId, ref: 'name', required: true }
+    //creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 });
 
 const Recipe = mongoose.model('Recipe', recipeSchema);
@@ -47,7 +47,7 @@ router.post('/recipes', upload.single('image'), async (req, res) => {
             image,
             ingredients,
             instructions,
-            creator
+            // creator
         });
 
         await recipe.save();
