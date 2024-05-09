@@ -14,6 +14,45 @@ function fetchUserProfile() {
     };
 }
 
+function fetchUserProfile() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', '/user/info', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem("UserValidation"));
+    xhr.send();
+    xhr.onload = function () {
+        if (xhr.status == 200) {
+            const user = JSON.parse(xhr.responseText);
+            // Update UI with user data
+            updateProfileUI(user);
+        } else if (xhr.status == 401) {
+            console.error("Authentication failed:", xhr.responseText);
+            // Handle authentication errors (e.g., redirect to login page)
+            redirectToLogin();
+        } else {
+            console.error("Error fetching user data:", xhr.responseText);
+            // Handle other types of errors (e.g., show a message to the user)
+            console.error("Failed to fetch profile data.");
+        }
+    };
+}
+
+function updateProfileUI(user) {
+    // Assuming you have elements in your HTML to display user data
+    document.getElementById('username').textContent = user.name;
+    document.getElementById('useremail').textContent = user.email;
+    // Add more fields as needed
+}
+
+function redirectToLogin() {
+    window.location.href = '/login'; // Adjust URL as needed
+}
+
+function showErrorToUser(message) {
+    // Display error message to user in the UI
+    document.getElementById('error-message').textContent = message;
+}
+
 function register(event) {
     let xhr = new XMLHttpRequest();
     xhr.open('POST', '/user/home', true);

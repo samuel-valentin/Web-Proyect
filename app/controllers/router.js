@@ -16,6 +16,8 @@ function validateAdmin(req, res, next) {
 
 // Usar el router de usuarios para todas las rutas bajo '/user'
 router.use('/user', usersRouter);
+// Usar el router de recetas para todas las rutas bajo '/new_recipe'
+router.use('/new_recipe', usersRouter);
 
 // Ruta base para enviar al home
 router.get('/',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/home.html")));
@@ -24,14 +26,14 @@ router.get('/home',(req,res) => res.sendFile(path.resolve(__dirname + "/../views
 // Ruta para el perfil de usuario
 router.get('/profile', (req, res) => {
     // Verificar si el usuario está autenticado antes de enviar el perfil
-    if (!req.headers.authorization) {
-        res.redirect('/login'); // Redirige al login si no está autenticado
-    } else {
-        res.sendFile(path.resolve(__dirname, "../views/userprofile.html"));
-    }
+    // if (req.headers.authorization) {
+    //    return res.redirect('/home'); // Redirige al login si no está autenticado
+   // } else {
+        return res.sendFile(path.resolve(__dirname + "/../views/user_profile.html"));
+    //}
 });
 
-// router.get('/views/user/?',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/userprofile.html")));
+router.get('/views/user/?',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/user_profile.html")));
 
 // Ruta para crear receta nueva
 router.get('/new_recipe',(req,res) => {
@@ -39,7 +41,7 @@ router.get('/new_recipe',(req,res) => {
     if (!req.headers.authorization) {
         res.redirect('/login'); // Redirige al login si no está autenticado
     } else {
-        res.sendFile(path.resolve(__dirname, "../views/userprofile.html"));
+        res.sendFile(path.resolve(__dirname, "/../views/new_recipe.html"));
     }
 });
 
