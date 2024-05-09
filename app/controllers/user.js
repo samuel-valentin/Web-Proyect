@@ -89,17 +89,20 @@ function login(event) {
     const email = document.getElementById("emailInputLogin").value;
     const password = document.getElementById("passwordInputLogin").value;
 
+    
     fetch('/user/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email: email.trim(), password: password.trim() })
     })
     .then(response => response.json())
     .then(data => {
         if (data.token) {
             sessionStorage.setItem("UserValidation", data.token);
+            sessionStorage.setItem('user', JSON.stringify(data.user));
+            
             alert("Login successful!");
             window.location.href = "http://localhost:3000/profile";
         } else {

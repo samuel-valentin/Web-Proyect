@@ -17,7 +17,7 @@ function validateAdmin(req, res, next) {
 // Usar el router de usuarios para todas las rutas bajo '/user'
 router.use('/user', usersRouter);
 // Usar el router de recetas para todas las rutas bajo '/new_recipe'
-router.use('/new_recipe', usersRouter);
+router.use('/new_recipe', recipesRouter);
 
 // Ruta base para enviar al home
 router.get('/',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/home.html")));
@@ -47,6 +47,6 @@ router.get('/new_recipe',(req,res) => {
 });
 
 // Ruta para ver una receta específica
-router.get('/recipe/',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/recipe.html")));
+router.get('/recipes/',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/recipe.html")));
 
 module.exports = router;

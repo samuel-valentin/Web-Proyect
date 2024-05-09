@@ -5,7 +5,15 @@ const path = require('path');
 const router = express.Router();
 
 // Configuración de multer para guardar imágenes
-const upload = multer({ dest: 'app/public/images/' });
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'app/public/images/')
+    },
+    filename: function(req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname)) // Construyendo el nombre del archivo
+    }
+});
+const upload = multer({ storage: storage });
 
 mongoose.connect('mongodb+srv://oscarchiw:HomeBakesDASW@daswproject.ur4wdy7.mongodb.net/HomeBakes')
 
@@ -32,24 +40,20 @@ const Recipe = mongoose.model('Recipe', recipeSchema);
 
 // Ruta POST para crear una receta
 router.post('/recipes', upload.single('image'), async (req, res) => {
-    if (!req.user) {
-        return res.status(401).send({ message: "Unauthorized: No user logged in." });
+    if (!req.file) {
+        return res.status(400).send({ message: "No image uploaded" });
     }
-
     try {
         const { name, description, ingredients, instructions } = req.body;
-        const image = req.file ? req.file.path : ''; // Verificar si el archivo de imagen está presente
-        const creator = req.user._id; // Asumiendo autenticación previa
-
+        const image = req.file.path;
         const recipe = new Recipe({
             name,
             description,
             image,
             ingredients,
-            instructions,
-            // creator
+            instructions
+            //creator
         });
-
         await recipe.save();
         res.status(201).send({ message: "Recipe created successfully", recipeId: recipe._id });
     } catch (error) {
@@ -57,4 +61,5 @@ router.post('/recipes', upload.single('image'), async (req, res) => {
         res.status(500).send({ message: "Error creating recipe" });
     }
 });
+
 module.exports = router;

@@ -7,6 +7,8 @@ const { read } = require('fs');
 const router = express.Router();
 let app = express();
 
+const keySecret = "MzVlYzY2NzU0ODQ2OTVmOTM1ZmE4NDk5MjQ1NTY3YzU="
+
 mongoose.connect('mongodb+srv://oscarchiw:HomeBakesDASW@daswproject.ur4wdy7.mongodb.net/HomeBakes')
 
 const db = mongoose.connection;
@@ -36,7 +38,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre('save', async function(next) {
     if (this.isModified('password') || this.isNew) {
-        this.password = await bcrypt.hash(this.password, 10);
+        this.password = await bcrypt.hashSync(this.password, 10);
     }
     next();
 });
@@ -74,6 +76,7 @@ router.post('/home', async (req, res) => {
         }
         
         const hashedPassword = await bcrypt.hash(password, 10);
+
         user = new User({
             name,
             email,
@@ -83,6 +86,7 @@ router.post('/home', async (req, res) => {
         });
         
         await user.save();
+
         res.status(201).json({ ID: user._id, message: 'User registered successfully. Please log in.' });
     } catch (error) {
         console.error('Registration Error:', error);
@@ -121,15 +125,23 @@ router.post('/login', async (req, res) => {
         console.log('Submitted password:', password);
         console.log('Stored hash:', user.password);
 
-        const isMatch = await bcrypt.compare(password, user.password);
+        const hashedPassword = await bcrypt.hashSync(password, 10);
+        
+        console.log(bcrypt.compareSync(password,hashedPassword));
+
+        const isMatch = bcrypt.compareSync(password, hashedPassword);
+
+        console.log(user.password, isMatch);
         console.log('Password match:', isMatch);
 
         if (!isMatch) {
             return res.status(401).json({ message: 'Incorrect password' });
         }
 
-        const token = jwt.sign({ id: user._id }, 'your_jwt_secret', { expiresIn: '1d' });
-        res.json({ message: 'Login successful', token });
+        const token = jwt.sign({ id: user._id }, hashedPassword, { expiresIn: '1d' });
+        console.log(token);
+
+        res.json({ message: 'Login successful', token, user });
     } catch (error) {
         console.error('Error during login:', error);
         res.status(500).json({ message: 'Error during login' });

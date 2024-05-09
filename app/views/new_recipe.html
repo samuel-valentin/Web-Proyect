@@ -56,7 +56,7 @@
                     <p></p>
                 </div>
                 <div class="col-md-8">
-                    <form class="hstack gap-2" enctype="multipart/form-data" method="post" action="/recipes">
+                    <form id="newRecipeForm" class="hstack gap-2" enctype="multipart/form-data" method="post" onsubmit="postRecipe(event)">
                         <div class="col-md-12">
                             <img id="imagePreview" style="height: 250px; display: none;">
                             <label for="imageUpload" class="form-label">Upload Image</label>
@@ -97,7 +97,36 @@
             document.getElementById('hiddenIngredients').value = ingredientsEditor.root.innerHTML;
             document.getElementById('hiddenInstructions').value = instructionsEditor.root.innerHTML;
         };
+
+        function postRecipe(event) {
+            event.preventDefault(); // Previene el envío normal del formulario
+            const form = document.getElementById('newRecipeForm');
+            const formData = new FormData(form);
+
+            console.log("entro", formData);
+        
+            // Añade los datos del editor Quill si es necesario
+            formData.set('ingredients', document.querySelector('#ingredients .ql-editor').innerHTML);
+            formData.set('instructions', document.querySelector('#instructions .ql-editor').innerHTML);
+        
+            // Realiza la solicitud fetch para enviar los datos del formulario
+            /*fetch('/recipes', {  // Asegúrate de que la URL es correcta según tu configuración del servidor
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('Recipe submitted successfully!');
+                // Aquí puedes agregar acciones adicionales tras una carga exitosa
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to submit the recipe');
+            });*/
+        }
     </script>
+
     
     <script>
           document.getElementById('imageUpload').addEventListener('change', function(event) {
