@@ -20,6 +20,7 @@
 
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.3.1/typeahead.bundle.min.js"></script>
 
 
 
@@ -77,10 +78,13 @@
                             <label for="instructions" class="form-label">Instructions</label>
                             <textarea class="form-control" name="instructions"></textarea>
                         </div>
+                        <div class="col-md-12">
+                            <label for="tags" class="form-label">Tags (separated by comma i.e. "Pizza, Pepperoni, Cheeses,...")</label>
+                            <input class="form-control" name="tags" type="text" placeholder="Add tags" />
+                        </div>
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit" onclick="postRecipe()" >Submit form</button>
                         </div>
-
                 </div>
             </div>
         </div>

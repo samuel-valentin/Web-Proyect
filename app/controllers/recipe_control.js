@@ -1,3 +1,5 @@
+
+
 class ShoppingCart {
 
     constructor(products) {
@@ -147,3 +149,4 @@ function updateCartBadge() {
         document.getElementById("cart-count").innerText = cartCount;
     }
 }
+

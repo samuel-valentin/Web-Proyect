@@ -1,3 +1,31 @@
+function addFavorite(recipeId) {
+    fetch('/user/favorites', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorage.getItem("UserValidation")
+        },
+        body: JSON.stringify({ recipeId })
+    })
+    .then(response => response.json())
+    .then(data => alert(data.message))
+    .catch(error => console.error('Error adding to favorites:', error));
+}
+
+function removeFavorite(recipeId) {
+    fetch('/user/remove-favorite', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorage.getItem("UserValidation")
+        },
+        body: JSON.stringify({ recipeId })
+    })
+    .then(response => response.json())
+    .then(data => alert(data.message))
+    .catch(error => console.error('Error removing from favorites:', error));
+}
+
 // function showingProducts(selection) {
 //     let xhr = new XMLHttpRequest();
 //     xhr.open('GET', 'http://localhost:3000/products');
