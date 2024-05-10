@@ -16,6 +16,7 @@
     <script src="../controllers/admin.js"></script>
     <script src="../controllers/UPcontrol.js"></script>
     <script src="../controllers/user.js"></script>
+    <script src="../controllers/recipe_control.js"></script>
     <link rel="stylesheet" href="../views/styles/styles.css">
 </head>
 
@@ -31,14 +32,15 @@
         <div>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <button type="button" class="custom-button">Favorite</button>
+                    <button type="button" class="custom-button" onclick='window.location.href="http://localhost:3000/user/favorites"'>Favorite</button>
                 </li>
                 <li class="nav-item">
                     <!-- <button type="button" class="custom-button">Create</button> -->
-                    <button type="button" class="custom-button" onclick="window.location.href='http://localhost:3000/user/recipe'">Create</button>
+                    <button type="button" class="custom-button" onclick='window.location.href="http://localhost:3000/user/new_recipe"'>Create</button>
                 </li>
             </ul>
         </div>
+        
     </nav>
 
     <section id="fill_with_info"></section>
@@ -60,16 +62,22 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-               UPDUP();
-            });
-        </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                UPDRP();
-            });
-        </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            UPDUP();
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            UPDRP();
+        });
+    </script>
+    <script>
+        function redirectToRecipe(recipeId) {
+            window.location.href = `/recipe/${recipeId}`;
+        }
+    </script>
+    
 
 </body>
 

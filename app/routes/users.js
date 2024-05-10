@@ -2,9 +2,10 @@ const mongoose = require('mongoose');
 const express = require('express');
 const bcrypt = require('bcrypt');
 const path = require('path');
+const router = express.Router();
+const jwt = require('jsonwebtoken');
 const utils = require('../controllers/utils');
 const { read } = require('fs');
-const router = express.Router();
 let app = express();
 
 const keySecret = "MzVlYzY2NzU0ODQ2OTVmOTM1ZmE4NDk5MjQ1NTY3YzU="
@@ -21,7 +22,9 @@ router.get('/home',(req,res) => res.sendFile(path.resolve(__dirname + "/../views
 router.get('/register',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/home.html")));
 router.get('/login',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/home.html")));
 router.get('/profile',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/user_profile.html")));
-router.get('/recipe',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/new_recipe.html")));
+router.get('/new_recipe',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/new_recipe.html")));
+router.get('/recipe/:id',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/recipe.html")));
+router.get('/recipes',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/recipe_explorer.html")));
 
 
 // Ruta para la visualización de la página de perfil
@@ -29,14 +32,17 @@ router.get('/',(req,res) => {
     res.sendFile(path.resolve(__dirname + "/../views/user_profile.html"));
 });
 
+// Esquema de usuario en MongoDB
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     description: { type: String, default: 'Tell us about you!' },
-    image: { type: String, default: 'https://images.unsplash.com/photo-1466921583968-f07aa80c526e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW5jb2duaXRvfGVufDB8fDB8fHwy' }
+    image: { type: String, default: 'https://images.unsplash.com/photo-1466921583968-f07aa80c526e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW5jb2duaXRvfGVufDB8fDB8fHwy' },
+    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }]
 });
 
+// Modificar contraseña
 userSchema.pre('save', async function(next) {
     if (this.isModified('password') || this.isNew) {
         this.password = await bcrypt.hashSync(this.password, 10);
@@ -44,9 +50,10 @@ userSchema.pre('save', async function(next) {
     next();
 });
 
+// Modelo de usuario
 var User = mongoose.model('users', userSchema);
 
-
+// Ruta para obtener la información de la copia del token
 router.get('/info',(req,res) => {
     console.log("Info working!");
     let = token = req.headers['authorization']?.split(' ')[1];
@@ -61,9 +68,9 @@ router.get('/info',(req,res) => {
     });
 });
 
-
+// Ruta en home para verificar si el Email ya está registrado e impedir que se repitan en la BD
 router.post('/home', async (req, res) => {
-    const { name, email, password, description, image } = req.body;
+    const { name, email, password } = req.body;
     try {
         let user = await User.findOne({ email });
         if (user) {
@@ -77,7 +84,8 @@ router.post('/home', async (req, res) => {
             email,
             password: hashedPassword,
             description: undefined,
-            image: undefined
+            image: undefined,
+            favorites: undefined
         });
         
         await user.save();
@@ -89,7 +97,6 @@ router.post('/home', async (req, res) => {
     }
 });
 
-const jwt = require('jsonwebtoken');
 
 // Middleware para autenticar
 function authenticate(req, res, next) {
@@ -106,6 +113,7 @@ function authenticate(req, res, next) {
     }
 }
 
+// Ruta para realizar un login
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     console.log('Login attempt for email:', email);
@@ -157,7 +165,7 @@ router.post('/login', async (req, res) => {
 //     });
 // });
 
-
+// Ruta para actualizar al usuario
 router.put('/profile', authenticate, async (req, res) => {
     try {
         const updates = req.body;
@@ -175,6 +183,46 @@ router.put('/profile', authenticate, async (req, res) => {
         res.status(500).send('Error updating user profile');
     }
 });
+
+// Obtener las recetas favoritas
+router.get('/favorites', async (req, res) => {
+    try {
+        const favorites = await User.findByIdAndUpdate(userId, { $addToSet: { favorites: recipeId } });
+        res.json(favorites);
+    } catch (error) {
+        res.status(500).send({ message: "Error al obtener los tags", error: error.message });
+    }
+});
+
+// Ruta POST para agregar una receta a favoritos
+router.post('/favorites', authenticate, async (req, res) => {
+    const userId = req.user.id;
+    const recipeId = req.body.recipeId;
+
+    try {
+        await User.findByIdAndUpdate(userId, { $addToSet: { favorites: recipeId } });
+        res.status(200).json({ message: 'Recipe added to favorites successfully' });
+    } catch (error) {
+        console.error('Error adding favorite:', error);
+        res.status(500).json({ message: 'Error adding recipe to favorites' });
+    }
+});
+
+// Ruta POST para remover una receta de favoritos
+router.post('/remove-favorite', authenticate, async (req, res) => {
+    const userId = req.user.id;
+    const recipeId = req.body.recipeId;
+
+    try {
+        await User.findByIdAndUpdate(userId, { $pull: { favorites: recipeId } });
+        res.status(200).json({ message: 'Recipe removed from favorites successfully' });
+    } catch (error) {
+        console.error('Error removing favorite:', error);
+        res.status(500).json({ message: 'Error removing recipe from favorites' });
+    }
+});
+
+
 
 // router.post('/recipe',(req,res) => {
 //     console.log("Register working!");

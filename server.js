@@ -22,9 +22,6 @@ app.get('/', (req, res) => {
     res.send("e-commerce app Home Bakes");
 });
 
-app.get('/new_recipe',
-    (req, res) => res.sendFile(path.join(__dirname, '/app/views/new_recipe.html'))
-);
 
 app.listen(port, () => {
     console.log("Home Bakes app listening on port " + port);

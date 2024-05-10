@@ -5,6 +5,8 @@ function postRecipe() {
     const ingredients = document.querySelector('textarea[name="ingredients"]').value;
     const instructions = document.querySelector('textarea[name="instructions"]').value;
     const image = document.querySelector('input[name="image"]').value;
+    const tagsInput = document.querySelector('input[name="tags"]').value;
+    const tags = tagsInput.split(',').map(tag => tag.trim());
     // Obtiene el valor del campo oculto "owner"
     let owner = sessionStorage.getItem("user");
     owner = JSON.parse(owner);
@@ -18,6 +20,7 @@ function postRecipe() {
         image: image,
         ingredients: ingredients,
         instructions: instructions,
+        tags: tags,
         owner: owner
     };
 
@@ -26,7 +29,7 @@ function postRecipe() {
     // Realiza la solicitud XMLHttpRequest para enviar los datos del formulario
     let xhr = new XMLHttpRequest();
     console.log(jsonData)
-    xhr.open('POST', '/new_recipe/recipe', true); 
+    xhr.open('POST', '/new_recipe/recipes', true); 
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send(jsonData);
     xhr.onload = function() {
@@ -39,3 +42,26 @@ function postRecipe() {
     };
     
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const tags = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.whitespace,
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: '/new_recipe/find_tags?q=%QUERY',
+            wildcard: '%QUERY'
+        }
+    });
+
+    $('#tags-input').typeahead({
+        minLength: 1,
+        highlight: true
+    }, {
+        name: 'tags',
+        source: tags
+    });
+
+    $('#tags-input').bind('typeahead:select', function(ev, suggestion) {
+        console.log('Selected:', suggestion);
+    });
+});

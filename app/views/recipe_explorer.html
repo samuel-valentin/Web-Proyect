@@ -12,15 +12,17 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../views/styles/styles.css">
 
     <script src="../controllers/home.js"></script>
     <script src="../controllers/recipe_control.js"></script>
-    <link rel="stylesheet" href="../views/styles/styles.css">
+    <script src="../controllers/recipes_explorer.js"></script>
+        
 </head>
 
 <body>
     <nav class="navbar navbar-expand-sm" style="background-color: rgb(0, 0, 0);">
-        <a class="navbar-brand" href="#home">HOME BAKES</a>
+        <a class="navbar-brand" href="/">HOME BAKES</a>
         <div class="flex-grow-1">
             <form class="form-inline my-2 my-sm-0">
                 <input class="form-control col-4" type="text" placeholder="Look for a recipe">
@@ -43,40 +45,20 @@
         </div>
     </nav>
 
-
-    <div class="row" style="padding-left: 60px; padding-top: 40px;">
-        <div style="text-align: center; width: 20%;"  id="recipeImage">
-            <img class="selected-product" src="" alt="..." style="width: 100%;">
-        </div>
-        <div style="width: 60%; padding-left: 2%;">
-            <h4 style="font-size: 26px; font-family: 'Hammersmith'; text-transform: uppercase; text-decoration: underline; text-decoration-thickness: 1px;" id="title">Título del Producto</h4>
-            <div>
-                <p style="font-family: 'Space'; font-size: 13px;">Created by <a><b><u id="username"></u></b></a></p>
-            </div>
-            <div id="tangs">
-                <button class="tag">Tag</button>
-                <button class="tag">Tag</button>
-            </div>
-            <div style="width: 60%; padding-top:15px; font-family: 'Space';">
-                <p style="font-weight: 650; font-size: 20px;">Ingredients</p>
-                <ul id="ingredientList">
-                    
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div style="padding-left: 60px; padding-top: 20px; font-family: 'Space';">
-        <p style="font-weight: 650; font-size: 20px;">Instructions</p>
-        <div id="description"></div>
+    <div class="trending-title-container text-center mt-5 container-lg">
+        <h1 class="trending-title">TRENDING RECIPES</h1>
+        <p class="subtitle">Most liked by the community!</p>
+        <div id="tags-container" class="mb-3"></div>
+        <div id="recipesContainer" class="row"></div>
     </div>
 
-
+    <!-- JavaScripts -->
+    
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            fetchAndDisplayRecipe();
+        document.addEventListener("DOMContentLoaded", function() {
+            fetchAllRecipes();
         });
     </script>
-
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">

@@ -12,31 +12,61 @@ db.once('open', function() {
   console.log("Connected successfully to MongoDB");
 });
 
-router.get('/recipes',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/new_recipe.html")));
+router.get('/new_recipe',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/new_recipe.html")));
 
-// Esquema y modelo de Mongoose
+// Esquema y modelo de las recetas para Mongoose
 const recipeSchema = new mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
     image: { type: String, required: true },
     ingredients: { type: String, required: true },
     instructions: { type: String, required: true },
+    tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag' }],
     owner: { type: String, required: true }
 });
 
 const Recipe = mongoose.model('Recipe', recipeSchema);
 
-// Ruta POST para crear una receta
-router.post('/recipe', async (req, res) => {
-    console.log("REQ BODY:", req.body)
+// Esquema y modelo de los tags para Mongoose
+const tagSchema = new mongoose.Schema({
+    name: { type: String, required: true, unique: true }
+});
+
+const Tag = mongoose.model('Tag', tagSchema);
+
+router.get('/recipes', async (req, res) => {
     try {
-        const { name, description, image, ingredients, instructions, owner } = req.body;
+        const recipes = await Recipe.find({}); 
+        res.json(recipes);
+    } catch (error) {
+        console.error("Failed to fetch recipes:", error);
+        res.status(500).send({ message: "Failed to fetch recipes" });
+    }
+});
+
+// Ruta POST para crear una receta
+router.post('/recipes', async (req, res) => {
+    console.log("se creo la receta")
+    try {
+        const { name, description, image, ingredients, instructions, tags, owner } = req.body;
+
+        // Manejar los tags: buscar si existen o crear nuevos
+        const tagsDocs = await Promise.all(tags.map(async tag => {
+            let tagDoc = await Tag.findOne({ name: tag });
+            if (!tagDoc) {
+                tagDoc = new Tag({ name: tag });
+                await tagDoc.save();
+            }
+            return tagDoc._id;
+        }));
+
         const recipe = new Recipe({
             name,
             description,
             image,
             ingredients,
             instructions,
+            tags: tagsDocs,
             owner
         });
         await recipe.save();
@@ -47,6 +77,62 @@ router.post('/recipe', async (req, res) => {
     }
 });
 
+router.get('/recipe/:id', async (req, res) => {
+    console.log("Accediendo a la ruta con ID:", req.params.id);
+    try {
+        const recipe = await Recipe.findById(req.params.id);
+        if (recipe) {
+            res.status(200).json(recipe);
+        } else {
+            res.status(404).send('Receta no encontrada');
+        }
+    } catch (error) {
+        console.error("Error en la base de datos:", error);
+        res.status(500).send({ message: "Error al obtener la receta", error: error.message });
+    }
+});
+
+router.get('/search_recipes', async (req, res) => {
+    try {
+        const { searchQuery } = req.query;
+        const recipes = await Recipe.find({
+            $or: [
+                { name: { $regex: searchQuery, $options: 'i' } },
+                { description: { $regex: searchQuery, $options: 'i' } }
+            ]
+        });
+        res.json(recipes);
+    } catch (error) {
+        console.error("Failed to fetch recipes:", error);
+        res.status(500).send({ message: "Failed to fetch recipes" });
+    }
+});
+
+// Obtener todos los tags
+router.get('/tags', async (req, res) => {
+    try {
+        const tags = await Tag.find({});
+        res.json(tags);
+    } catch (error) {
+        res.status(500).send({ message: "Error al obtener los tags", error: error.message });
+    }
+});
+
+// Ruta para encontrar tags en la colección de MongoDB
+router.get('/tags', async (req, res) => {
+    const query = req.query.q;
+    const tagsCollection = db.collection('tags');
+    const tags = await tagsCollection.find({ name: { $regex: query, $options: 'i' } }).toArray();
+    res.json(tags.map(tag => tag.name));
+});
+
+// Agregar un nuevo tag
+router.post('/tags', async (req, res) => {
+    const { name } = req.body;
+    const tagsCollection = db.collection('tags');
+    const result = await tagsCollection.insertOne({ name });
+    res.status(201).json({ message: 'Tag added', tagId: result.insertedId });
+});
 
 router.get('/info', async(req,res) => {
         try {
@@ -85,6 +171,32 @@ router.get('/info', async(req,res) => {
     //         res.status(200).send(user);
     //     }
     // });
+});
+
+// Ruta para obtener la receta
+router.get('/recipe/info/:id', async (req, res) => {
+    console.log('AQUI[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[', res)
+    try {
+        const recipe = await Recipe.findById({ id: req.params.id });
+        console.log(recipe);
+        if (recipe) {
+            res.status(200).json(recipe);
+        } else {
+            res.status(404).send('Receta no encontrada');
+        }
+    } catch (error) {
+        res.status(500).send({ message: "Error fetching recipes by id", error: error.message });
+    }
+});
+
+// Ruta para filtrar por tag
+router.get('/recipes/:tagId', async (req, res) => {
+    try {
+        const recipes = await Recipe.find({ tags: req.params.tagId }).populate('tags');
+        res.status(200).json(recipes);
+    } catch (error) {
+        res.status(500).send({ message: "Error fetching recipes by tag", error: error.message });
+    }
 });
 
 module.exports = router;
