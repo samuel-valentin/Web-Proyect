@@ -14,7 +14,6 @@ db.once('open', function() {
 
 router.get('/recipes',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/new_recipe.html")));
 
-
 // Esquema y modelo de Mongoose
 const recipeSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -50,25 +49,42 @@ router.post('/recipe', async (req, res) => {
 
 
 router.get('/info', async(req,res) => {
-    try {
-        // Extrae el token de autorización del encabezado de la solicitud
-        const userEmail = req.headers['user-email'];
-        console.log("User Email:", userEmail);
+        try {
+            // Extraer el token de autorización del encabezado de la solicitud
+            const token = req.headers['authorization']?.split(' ')[1];
+            console.log("Token dentro del get info:", token);
+    
+            // Buscar las recetas del usuario
+            const recipes = await Recipe.find({ owner: token });
+            console.log("Recetas encontradas: ",recipes)
 
-        // Encuentra la receta por el propietario (suponiendo que el campo 'owner' en el modelo de receta almacena el ID del usuario propietario)
-        const recipes = await Recipe.find({ owner: userEmail });
-
-        // Verifica si se encontraron recetas
-        if (recipes.length === 0) {
-            return res.status(404).send({ message: "No recipes found for this user" });
+            // Verificar si se encontraron recetas
+            if (recipes.length === 0) {
+                return res.status(404).send({ message: "No recipes found for this user" });
+            }
+    
+            // Envía las recetas encontradas como respuesta
+            res.status(200).send(recipes);
+        } catch (error) {
+            console.error('Failed to fetch recipe information:', error);
+            res.status(500).send({ message: "Error fetching recipe information" });
         }
+    
 
-        // Envía las recetas encontradas como respuesta
-        res.status(200).send(recipes);
-    } catch (error) {
-        console.error('Failed to fetch recipe information:', error);
-        res.status(500).send({ message: "Error fetching recipe information" });
-    }
+
+    // console.log("Info working!");
+    // let = token = req.headers['authorization']?.split(' ')[1];
+    // console.log("REQ BODY DEL GET:", req.body)
+    // console.log("Token: ",token)
+    // console.log("ID ",token._id)
+    // mongoose.model('users').findOne({_id: token}).then((user) => {
+    //     if(user == null){
+    //         res.sendStatus(404);
+    //     }
+    //     else{
+    //         res.status(200).send(user);
+    //     }
+    // });
 });
 
 module.exports = router;

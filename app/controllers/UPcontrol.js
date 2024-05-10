@@ -1,5 +1,5 @@
 function UPDUP() {
-    console.log("Entro a la funcion");
+    console.log("Entro a la funcion usuario");
     let token = sessionStorage.getItem("user");
     token = JSON.parse(token);
     console.log(token)
@@ -47,48 +47,124 @@ function UPDUP() {
             alert("Failed to fetch profile information.");
         }
     };
-
-    // Hacer la solicitud para obtener la información de la receta
-    let recipeXhr = new XMLHttpRequest();
-    recipeXhr.open('GET', '/new_recipe/info', true);
-    recipeXhr.setRequestHeader('Content-Type', 'application/json');
-    recipeXhr.setRequestHeader('Authorization', `Bearer ${token._id}`);
-    console.log("Enviando solicitud de información de la receta")
-    recipeXhr.send();
-
-    recipeXhr.onload = function () {
-        if (recipeXhr.status == 200) {
-            const recipe = JSON.parse(recipeXhr.responseText);
-            console.log("Información de la receta obtenida:", recipe);
-            // Crear sección para mostrar la información de la receta
-            const recipeSection = `
-                <section aria-labelledby="signUp" role="region">
-                    <h1 class="username">POSTED RECIPES</h1>
-                    <div class="profile-info">
-                        <div class="image-container">
-                            <img src="${recipe.image}">
-                        </div>
-                        <div class="text-container2">
-                            <h1>${recipe.name}</h1>
-                            <p>${recipe.description}</p>
-                            <button type="button" id="blackbutton" style="margin-left: -100px;">Manage</button>
-                            <div class="button-container">
-                                <button type="button" class="edit-button">Ingredients</button>
-                                <button type="button" class="edit-button">Instructions</button>
-                            </div>
-                        </div>
-                    </div>
-                </section>`;
-            // Mostrar la sección de información de la receta
-            document.getElementById("fill_with_info").innerHTML += recipeSection;
-        } else {
-            console.error("Failed to fetch recipe information:", recipeXhr.statusText);
-            alert("Failed to fetch recipe information.");
-        }
-    };
 }
 
+function UPDRP() {
+    console.log("Entro a la funcion receta");
+    let token = sessionStorage.getItem("user");
+    token = JSON.parse(token);
+    console.log(token);
+    console.log(token._id);
+    if (!token) {
+      alert("Please log in first");
+      window.location.href = "/login";
+      return;
+    }
+    // Hacer la solicitud para obtener la información de las recetas
+    let recipeXhr = new XMLHttpRequest();
+    recipeXhr.open("GET", "/new_recipe/info", true);
+    recipeXhr.setRequestHeader("Content-Type", "application/json");
+    recipeXhr.setRequestHeader("Authorization", `Bearer ${token._id}`);
+    console.log("Enviando solicitud de información de las recetas");
+    recipeXhr.send();
+  
+    recipeXhr.onload = function () {
+      if (recipeXhr.status == 200) {
+        console.log("Entre al onload con código 200");
+        const recipes = JSON.parse(recipeXhr.responseText);
+        console.log("Información de las recetas obtenida:", recipes);
+        // Crear sección para mostrar la información de cada receta
+        let recipeSection = "";
+        // Agregar encabezado antes del bucle
+        recipeSection += `
+              <section aria-labelledby="signUp" role="region">
+                  <h1 class="username">POSTED RECIPES</h1>`;
+        recipes.forEach((recipe) => {
+          recipeSection += `
+              <div class="profile-info">
+                  <div class="image-container">
+                      <div class="image-container">
+                          <img src="${recipe.image}">
+                      </div>
+                      <div class="text-container2">
+                          <h1>${recipe.name}</h1>
+                          <p>${recipe.description}</p>
+                          <button type="button" id="blackbutton" style="margin-left: -100px;">Manage</button>
+                          <div class="button-container">
+                              <button type="button" class="edit-button">Ingredients</button>
+                              <button type="button" class="edit-button">Instructions</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>`;
+        });
+        // Agregar cierre de sección después del bucle
+        recipeSection += `
+              </section>`;
+        // Mostrar la sección de información de cada receta
+        document.getElementById("fill_with_info_recipe").innerHTML = recipeSection;
+      } else {
+        console.error("Failed to fetch recipe information:", recipeXhr.statusText);
+        alert("Failed to fetch recipe information.");
+      }
+    };
+  }
 
+
+// function UPDRP() {
+//     console.log("Entro a la funcion receta");
+//     let token = sessionStorage.getItem("user");
+//     token = JSON.parse(token);
+//     console.log(token)
+//     console.log(token._id)
+//     if (!token) {
+//         alert("Please log in first");
+//         window.location.href = "/login";
+//         return;
+//     }
+//     // Hacer la solicitud para obtener la información de la receta
+//     let recipeXhr = new XMLHttpRequest();
+//     recipeXhr.open('GET', '/new_recipe/info', true);
+//     recipeXhr.setRequestHeader('Content-Type', 'application/json');
+//     recipeXhr.setRequestHeader('Authorization', `Bearer ${token._id}`);
+//     console.log("Enviando solicitud de información de la receta")
+//     recipeXhr.send();
+
+//     recipeXhr.onload = function () {
+//         if (recipeXhr.status == 200) {
+//             console.log("Entre al onload con codigo 200")
+//             const recipe = JSON.parse(recipeXhr.responseText);
+//             console.log("Información de la receta obtenida:", recipe);
+//             // Crear sección para mostrar la información de la receta
+//             const recipeSection = `
+//             <section aria-labelledby="signUp" role="region">
+//                 <h1 class="username">POSTED RECIPES</h1>
+//                 <div class="profile-info">
+//                 <div class="image-container">
+//                     <div class="image-container">
+//                         <img src="${recipe.image}">
+//                     </div>
+//                     <div class="text-container2">
+//                         <h1>${recipe.name}</h1>
+//                         <p>${recipe.description}</p>
+//                         <button type="button" id="blackbutton" style="margin-left: -100px;">Manage</button>
+//                         <div class="button-container">
+//                             <button type="button" class="edit-button">Ingredients</button>
+//                             <button type="button" class="edit-button">Instructions</button>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </section>`;
+//             // Mostrar la sección de información de la receta
+//             // document.getElementById("fill_with_info_reciper").innerHTML = recipeSection;
+//             // Mostrar la sección de información de la receta
+//             document.getElementById("fill_with_info_recipe").innerHTML = recipeSection;
+//         } else {
+//             console.error("Failed to fetch recipe information:", recipeXhr.statusText);
+//             alert("Failed to fetch recipe information.");
+//         }
+//     };
+// }
 
 // function UPDUP() {
 //     console.log("Entro a la funcion");
