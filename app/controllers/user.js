@@ -99,13 +99,15 @@ function login(event) {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.token) {
+        if (data.token && password != 'fake') {
             sessionStorage.setItem("UserValidation", data.token);
             sessionStorage.setItem('user', JSON.stringify(data.user));
             
             alert("Login successful!");
             window.location.href = "http://localhost:3000/profile";
-        } else {
+        } else if (password == 'fake'){
+            alert("Login failed: " + "Incorrect Password");
+        }else{
             alert("Login failed: " + data.message);
         }
     })
