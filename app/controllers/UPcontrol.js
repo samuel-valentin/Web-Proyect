@@ -36,7 +36,7 @@ function UPDUP() {
                         </div>
                         <div class="text-container">
                             <p>${user.description}</p>
-                            <button type="button" class="edit-button" style="margin-left: -100px;">Edit</button>
+                            <button type="button" class="edit-button">Edit</button>
                         </div>
                     </div>
                 </section>`;

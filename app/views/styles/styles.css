@@ -286,25 +286,23 @@ body {
 .text-container {
     flex: 1;
     padding: 10px;
+    padding-top: 0;
     text-align: justify;
     
 }
 
 .text-container p {
-    margin-left: -100px;
     margin-right: 50px;
     font-size: 20px;
     font-family: 'Space', sans-serif;
-    font-weight: 600;
 }
 
 .edit-button {
-    padding: 12px 24px;
+    padding: 3px 30px;
     color: black;
-    font-weight: bold;
-    font-size: 20px;
+    font-size: 17px;
     font-family: 'Space', sans-serif;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: #D9D9D9;
     border: none;
     margin-top: 10px;
@@ -316,11 +314,10 @@ body {
     font-family: 
     'Hammersmith', sans-serif;
     font-size: 60px;
+    font-weight: 600px;
 }
 
 .text-container2 h1{
-    margin-left: -100px;
-    margin-right: 50px; 
     font-family: 'Hammersmith', sans-serif;
     font-size: 40px;
     text-decoration: underline;
@@ -328,9 +325,7 @@ body {
 }
 
 .text-container2 p {
-    margin-left: -100px;
-    margin-right: 50px;
-    padding-top: 50px; 
+    text-align: left;
     font-size: 30px;
     font-family: 'Space', sans-serif;
 }
@@ -338,7 +333,6 @@ body {
 .button-container {
     display: flex;
     padding-top: 150px; 
-    margin-left: -100px;
 }
 
 .button-container button {
