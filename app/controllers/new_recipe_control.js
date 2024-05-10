@@ -26,7 +26,7 @@ function postRecipe() {
     // Realiza la solicitud XMLHttpRequest para enviar los datos del formulario
     let xhr = new XMLHttpRequest();
     console.log(jsonData)
-    xhr.open('POST', '/new_recipe/recipe', true); // Asegúrate de que la URL sea la correcta
+    xhr.open('POST', '/new_recipe/recipe', true); 
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send(jsonData);
     xhr.onload = function() {
