@@ -21,6 +21,7 @@ router.get('/home',(req,res) => res.sendFile(path.resolve(__dirname + "/../views
 router.get('/register',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/home.html")));
 router.get('/login',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/home.html")));
 router.get('/profile',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/user_profile.html")));
+router.get('/recipe',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/new_recipe.html")));
 
 
 // Ruta para la visualización de la página de perfil
@@ -45,28 +46,6 @@ userSchema.pre('save', async function(next) {
 
 var User = mongoose.model('users', userSchema);
 
-// router.get('/info', (req, res) => {
-//     const token = req.headers['authorization']?.split(' ')[1];
-//     console.log(token)
-//     if (!token) {
-//         return res.status(401).send('Access denied. No token provided.');
-//     }
-
-//     try {
-//         const decoded = jwt.verify(token, 'your_jwt_secret');
-//         User.findById(decoded.id, (err, user) => {
-//             if (err) {
-//                 return res.status(500).send('Error fetching user.');
-//             }
-//             if (!user) {
-//                 return res.status(404).send('User not found.');
-//             }
-//             res.send(user);
-//         });
-//     } catch (ex) {
-//         res.status(400).send('Invalid token.');
-//     }
-// });
 
 router.get('/info',(req,res) => {
     console.log("Info working!");
@@ -97,8 +76,8 @@ router.post('/home', async (req, res) => {
             name,
             email,
             password: hashedPassword,
-            description: description || 'Tell us about you!',
-            image: image || 'default_image_url'
+            description: undefined,
+            image: undefined
         });
         
         await user.save();
@@ -164,19 +143,19 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.get('/user/getinfo',(req,res) => {
-    const UserID = req.headers['x-token'];
-    console.log(UserID);
-    mongoose.model('users').findOne({ID: UserID}).then((InfoUser) => {
-        if(InfoUser == null){
-            res.sendStatus(404);
-        }
-        else{
-                console.log("voy a mandar info de usuario");
-                res.status(200).send(InfoUser);
-        }
-    });
-});
+// router.get('/user/getinfo',(req,res) => {
+//     const UserID = req.headers['x-token'];
+//     console.log(UserID);
+//     mongoose.model('users').findOne({ID: UserID}).then((InfoUser) => {
+//         if(InfoUser == null){
+//             res.sendStatus(404);
+//         }
+//         else{
+//                 console.log("voy a mandar info de usuario");
+//                 res.status(200).send(InfoUser);
+//         }
+//     });
+// });
 
 
 router.put('/profile', authenticate, async (req, res) => {
@@ -196,5 +175,88 @@ router.put('/profile', authenticate, async (req, res) => {
         res.status(500).send('Error updating user profile');
     }
 });
+
+// router.post('/recipe',(req,res) => {
+//     console.log("Register working!");
+//     let x = req.body;
+//     console.log("Body: " + x);
+//     console.log("Password: " + x.password);
+//     let hash = bcrypt.hashSync(x.password,10);
+//     console.log("Hash: " + hash);
+//     let correct_password = bcrypt.compareSync(x.password,hash);
+//     console.log("Correct password: " + correct_password);
+//     let y = Object.values(x);
+//     console.log("Array" + y);
+//     console.log("Array size: " + y.length);
+//     console.log("Tipo de date" + typeof(x.date));
+//     if(!y.length)
+//     {
+//         res.sendStatus(400);
+//     }
+//     else{
+//         if(x.UserType == "Vendedor"){
+//             mongoose.model('vendedores').findOne({email: x.email}).then((vendedor) => {
+//                 if(vendedor != null){
+//                     res.sendStatus(409);
+//                 }
+//                 else{
+//                     let vendedor = new Vendedor({
+//                         ID: utils.generateUUID(),
+//                         name: x.name,
+//                         email: x.email,
+//                         password: hash,
+//                         date: x.date,
+//                         description: x.description,
+//                         country: x.country,
+//                         state: x.state,
+//                         city: x.city,
+//                         image: x.image,
+//                         phone: x.phone,
+//                         NoOfHomes: 0,
+//                         homes: [],
+//                         rating: 0,
+//                         numberofratings: 0
+//                     });
+//                     console.log("Vendedor: ");
+//                     console.table(vendedor);
+//                     vendedor.save();
+//                     res.status(200).send(vendedor.ID);
+//                 }
+                
+//             });
+                
+//         }
+//         else if(x.UserType == "Comprador"){
+//             mongoose.model('compradores').findOne({email: x.email}).then((comprador) => {
+//                 if(comprador != null){
+//                     res.sendStatus(409);
+//                 }
+//                 else{
+//                     let comprador = new Comprador({
+//                         ID: utils.generateUUID(),
+//                         name: x.name,
+//                         email: x.email,
+//                         password: hash,
+//                         date: x.date,
+//                         description: x.description,
+//                         country: x.country,
+//                         state: x.state,
+//                         city: x.city,
+//                         image: x.image,
+//                         phone: x.phone,
+//                         NoOfHomes: 0,
+//                         homes: [],
+//                         rating: 0,
+//                         numberofratings: 0
+//                     });
+//                     console.log("Comprador: ");
+//                     console.table(comprador);
+//                     comprador.save();
+//                     res.status(200).send(comprador.ID);
+//                 }
+//             });
+//         }
+//     }
+// });
 
 module.exports = router;
