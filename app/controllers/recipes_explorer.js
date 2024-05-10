@@ -1,10 +1,54 @@
-document.addEventListener("DOMContentLoaded", function() {
-    fetchRecipes();
-    fetchTags();
-});
+function fetchAllRecipes() {
+    console.log("Fetching all recipes");
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', '/new_recipe/recipes', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send();
+
+    xhr.onload = function () {
+        if (xhr.status == 200) {
+            const recipes = JSON.parse(xhr.responseText);
+            console.log("Recipes fetched successfully:", recipes);
+            displayRecipes(recipes);
+        } else {
+            console.error("Failed to fetch recipes:", xhr.statusText);
+            alert("Failed to fetch recipes.");
+        }
+    };
+
+    xhr.onerror = function () {
+        console.error("Request failed");
+        alert("An error occurred during the request.");
+    };
+}
+
+function displayRecipes(recipes) {
+    const recipesContainer = document.getElementById("recipesContainer");
+    recipesContainer.innerHTML = ''; // Clear existing entries
+
+    recipes.forEach(recipe => {
+        const recipeElement = document.createElement('div');
+        recipeElement.className = 'recipe-card col-3';
+        recipeElement.innerHTML = `
+            <div class="mb-5">
+                <img src="${recipe.image}" class="card-img-top" alt="${recipe.name}" style="height:300px!important; max-height:300px;
+                object-fit: cover;
+            " onclick="viewRecipeDetails('${recipe._id}')">
+                <a onclick="viewRecipeDetails('${recipe._id}')" >${recipe.name}</a>
+            </div>
+        `;
+        recipesContainer.appendChild(recipeElement);
+    });
+}
+
+function viewRecipeDetails(recipeId) {
+    window.location.href = `/recipe/${recipeId}`; // Assuming you have a route to view details
+}
+
 
 function fetchRecipes() {
-    fetch('/recipes') // Asegúrate de que esta URL sea correcta
+    fetch('/new_recipe/recipes') 
     .then(response => response.json())
     .then(recipes => {
         const container = document.getElementById('recipes-container');
@@ -24,7 +68,7 @@ function fetchRecipes() {
 }
 
 function fetchTags() {
-    fetch('/api/tags') // Asegúrate de que esta URL sea correcta
+    fetch('/tags') 
     .then(response => response.json())
     .then(tags => {
         const tagsContainer = document.getElementById('tags-container');

@@ -16,9 +16,10 @@ function validateAdmin(req, res, next) {
 
 // Usar el router de usuarios para todas las rutas bajo '/user'
 router.use('/user', usersRouter);
+router.use('/favorites', usersRouter);
 // Usar el router de recetas para todas las rutas bajo '/new_recipe'
 router.use('/new_recipe', recipesRouter);
-router.use('/recipe', recipesRouter);
+router.use('/recipe/:id', recipesRouter);
 router.use('/recipes', recipesRouter);
 router.use('/tags', recipesRouter);
 
@@ -51,9 +52,9 @@ router.get('/new_recipe',(req,res) => {
 });
 
 // Ruta para ver una receta específica
-router.get('/recipe',(req,res) => {return res.sendFile(path.resolve(__dirname + "/../views/recipe.html"))});
+router.get('/recipe/:id',(req,res) => {return res.sendFile(path.resolve(__dirname + "/../views/recipe.html"))});
 // Ruta para explorar todas las recetas
-router.get('/recipes',(req,res) => {return res.sendFile(path.resolve(__dirname + "/../views/recipes_explorer.html"))});
+router.get('/recipes',(req,res) => {return res.sendFile(path.resolve(__dirname + "/../views/recipe_explorer.html"))});
 
 
 module.exports = router;

@@ -34,8 +34,19 @@ const tagSchema = new mongoose.Schema({
 
 const Tag = mongoose.model('Tag', tagSchema);
 
+router.get('/recipes', async (req, res) => {
+    try {
+        const recipes = await Recipe.find({}); 
+        res.json(recipes);
+    } catch (error) {
+        console.error("Failed to fetch recipes:", error);
+        res.status(500).send({ message: "Failed to fetch recipes" });
+    }
+});
+
 // Ruta POST para crear una receta
 router.post('/recipes', async (req, res) => {
+    console.log("se creo la receta")
     try {
         const { name, description, image, ingredients, instructions, tags, owner } = req.body;
 
@@ -66,6 +77,20 @@ router.post('/recipes', async (req, res) => {
     }
 });
 
+router.get('/recipe/:id', async (req, res) => {
+    console.log("Accediendo a la ruta con ID:", req.params.id);
+    try {
+        const recipe = await Recipe.findById(req.params.id);
+        if (recipe) {
+            res.status(200).json(recipe);
+        } else {
+            res.status(404).send('Receta no encontrada');
+        }
+    } catch (error) {
+        console.error("Error en la base de datos:", error);
+        res.status(500).send({ message: "Error al obtener la receta", error: error.message });
+    }
+});
 // Obtener todos los tags
 router.get('/tags', async (req, res) => {
     try {
@@ -131,8 +156,24 @@ router.get('/info', async(req,res) => {
     // });
 });
 
+// Ruta para obtener la receta
+router.get('/recipe/info/:id', async (req, res) => {
+    console.log('AQUI[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[', res)
+    try {
+        const recipe = await Recipe.findById({ id: req.params.id });
+        console.log(recipe);
+        if (recipe) {
+            res.status(200).json(recipe);
+        } else {
+            res.status(404).send('Receta no encontrada');
+        }
+    } catch (error) {
+        res.status(500).send({ message: "Error fetching recipes by id", error: error.message });
+    }
+});
+
 // Ruta para filtrar por tag
-router.get('/recipes/by_tag/:tagId', async (req, res) => {
+router.get('/recipes/:tagId', async (req, res) => {
     try {
         const recipes = await Recipe.find({ tags: req.params.tagId }).populate('tags');
         res.status(200).json(recipes);

@@ -13,6 +13,10 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../views/styles/styles.css">
+
+    <script src="../controllers/home.js"></script>
+    <script src="../controllers/recipe_control.js"></script>
+    <script src="../controllers/recipes_explorer.js"></script>
         
 </head>
 
@@ -28,32 +32,31 @@
         <div>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <button type="button" class="custom-button">Create</button>
+                    <button type="button" class="custom-button" onclick='window.location.href="http://localhost:3000/user/favorites"'>Favorite</button>
                 </li>
                 <li class="nav-item">
-                    <button type="button" class="custom-button">Favorites</button>
+                    <!-- <button type="button" class="custom-button">Create</button> -->
+                    <button type="button" class="custom-button" onclick='window.location.href="http://localhost:3000/user/new_recipe"'>Create</button>
                 </li>
                 <li class="nav-item">
-                    <button type="button" class="custom-button">Profile</button>
+                    <button type="button" class="custom-button" onclick='window.location.href="http://localhost:3000/user/profile"'>Profile</button>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <div class="trending-title-container text-center mt-5">
+    <div class="trending-title-container text-center mt-5 container-lg">
         <h1 class="trending-title">TRENDING RECIPES</h1>
         <p class="subtitle">Most liked by the community!</p>
         <div id="tags-container" class="mb-3"></div>
-        <div id="recipes-container" class="row"></div>
+        <div id="recipesContainer" class="row"></div>
     </div>
 
     <!-- JavaScripts -->
-    <script src="../controllers/home.js"></script>
-    <script src="../controllers/recipes_explorer.js"></script>
+    
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            fetchRecipes();
-            fetchTags();
+            fetchAllRecipes();
         });
     </script>
 

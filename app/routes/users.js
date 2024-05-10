@@ -22,7 +22,9 @@ router.get('/home',(req,res) => res.sendFile(path.resolve(__dirname + "/../views
 router.get('/register',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/home.html")));
 router.get('/login',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/home.html")));
 router.get('/profile',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/user_profile.html")));
-router.get('/recipe',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/new_recipe.html")));
+router.get('/new_recipe',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/new_recipe.html")));
+router.get('/recipe/:id',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/recipe.html")));
+router.get('/recipes',(req,res) => res.sendFile(path.resolve(__dirname + "/../views/recipe_explorer.html")));
 
 
 // Ruta para la visualización de la página de perfil
@@ -68,7 +70,7 @@ router.get('/info',(req,res) => {
 
 // Ruta en home para verificar si el Email ya está registrado e impedir que se repitan en la BD
 router.post('/home', async (req, res) => {
-    const { name, email, password, description, image } = req.body;
+    const { name, email, password } = req.body;
     try {
         let user = await User.findOne({ email });
         if (user) {
@@ -82,7 +84,8 @@ router.post('/home', async (req, res) => {
             email,
             password: hashedPassword,
             description: undefined,
-            image: undefined
+            image: undefined,
+            favorites: undefined
         });
         
         await user.save();
@@ -162,7 +165,7 @@ router.post('/login', async (req, res) => {
 //     });
 // });
 
-
+// Ruta para actualizar al usuario
 router.put('/profile', authenticate, async (req, res) => {
     try {
         const updates = req.body;
@@ -178,6 +181,16 @@ router.put('/profile', authenticate, async (req, res) => {
     } catch (error) {
         console.error('Update Error:', error);
         res.status(500).send('Error updating user profile');
+    }
+});
+
+// Obtener las recetas favoritas
+router.get('/favorites', async (req, res) => {
+    try {
+        const favorites = await User.findByIdAndUpdate(userId, { $addToSet: { favorites: recipeId } });
+        res.json(favorites);
+    } catch (error) {
+        res.status(500).send({ message: "Error al obtener los tags", error: error.message });
     }
 });
 
@@ -208,6 +221,8 @@ router.post('/remove-favorite', authenticate, async (req, res) => {
         res.status(500).json({ message: 'Error removing recipe from favorites' });
     }
 });
+
+
 
 // router.post('/recipe',(req,res) => {
 //     console.log("Register working!");

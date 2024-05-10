@@ -50,7 +50,7 @@ function UPDUP() {
 
     // Hacer la solicitud para obtener la información de la receta
     let recipeXhr = new XMLHttpRequest();
-    recipeXhr.open('GET', '/new_recipe/info', true);
+    recipeXhr.open('GET', '/recipes/info', true);
     recipeXhr.setRequestHeader('Content-Type', 'application/json');
     recipeXhr.setRequestHeader('Authorization', `Bearer ${token._id}`);
     console.log("Enviando solicitud de información de la receta")
@@ -58,29 +58,33 @@ function UPDUP() {
 
     recipeXhr.onload = function () {
         if (recipeXhr.status == 200) {
-            const recipe = JSON.parse(recipeXhr.responseText);
-            console.log("Información de la receta obtenida:", recipe);
+            const recipes = JSON.parse(recipeXhr.responseText);
+            console.log("Información de la receta obtenida:", recipes);
             // Crear sección para mostrar la información de la receta
-            const recipeSection = `
-                <section aria-labelledby="signUp" role="region">
-                    <h1 class="username">POSTED RECIPES</h1>
-                    <div class="profile-info">
-                        <div class="image-container">
-                            <img src="${recipe.image}">
-                        </div>
-                        <div class="text-container2">
-                            <h1>${recipe.name}</h1>
-                            <p>${recipe.description}</p>
-                            <button type="button" id="blackbutton" style="margin-left: -100px;">Manage</button>
-                            <div class="button-container">
-                                <button type="button" class="edit-button">Ingredients</button>
-                                <p>${recipe.ingredients}</p>
-                                <button type="button" class="edit-button">Instructions</button>
-                                <p>${recipe.instructions}</p>
-                            </div>
-                        </div>
+
+            let recipesCard = "";
+        
+            recipes.forEach((recipe) => {         
+                recipesCard += `
+                <div class="profile-info" key="${recipe._id}">
+                    <div class="image-container">
+                        <img src="${recipe.image}">
                     </div>
-                </section>`;
+                    <div class="text-container2">
+                        <h1 onclick="redirectToRecipe('${recipe._id}')">${recipe.name}</h1>
+                        <p>${recipe.description}</p>
+                        <button type="button" id="blackbutton">Manage</button>
+                    </div>
+                </div> `;
+            });
+
+            const recipeSection = `
+            <section aria-labelledby="recipes" role="region">
+                <h1 class="username">POSTED RECIPES</h1>
+                ${recipesCard}
+            </section>`;
+
+
             // Mostrar la sección de información de la receta
             document.getElementById("fill_with_info").innerHTML += recipeSection;
         } else {
