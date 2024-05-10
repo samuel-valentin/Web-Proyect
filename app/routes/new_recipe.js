@@ -91,6 +91,23 @@ router.get('/recipe/:id', async (req, res) => {
         res.status(500).send({ message: "Error al obtener la receta", error: error.message });
     }
 });
+
+router.get('/search_recipes', async (req, res) => {
+    try {
+        const { searchQuery } = req.query;
+        const recipes = await Recipe.find({
+            $or: [
+                { name: { $regex: searchQuery, $options: 'i' } },
+                { description: { $regex: searchQuery, $options: 'i' } }
+            ]
+        });
+        res.json(recipes);
+    } catch (error) {
+        console.error("Failed to fetch recipes:", error);
+        res.status(500).send({ message: "Failed to fetch recipes" });
+    }
+});
+
 // Obtener todos los tags
 router.get('/tags', async (req, res) => {
     try {
