@@ -89,6 +89,7 @@ router.get('/recipe/:id', async (req, res) => {
     } catch (error) {
         console.error("Error en la base de datos:", error);
         res.status(500).send({ message: "Error al obtener la receta", error: error.message });
+        
     }
 });
 

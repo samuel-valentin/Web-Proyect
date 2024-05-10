@@ -90,6 +90,7 @@ function UPDUP() {
         } else {
             console.error("Failed to fetch recipe information:", recipeXhr.statusText);
             alert("Failed to fetch recipe information.");
+            window.location.href = "/recipes";
         }
     };
 }

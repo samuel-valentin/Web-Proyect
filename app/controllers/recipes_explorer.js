@@ -14,6 +14,7 @@ function fetchAllRecipes() {
         } else {
             console.error("Failed to fetch recipes:", xhr.statusText);
             alert("Failed to fetch recipes.");
+            window.location.href = "/recipes";
         }
     };
 

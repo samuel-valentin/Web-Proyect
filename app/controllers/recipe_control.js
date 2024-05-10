@@ -49,6 +49,8 @@ function getRecipeById(recipeId) {
         } else {
             console.error("Failed to fetch recipe:", xhr.statusText);
             alert("Failed to fetch recipe information.");
+            window.location.href = "/recipes";
+
         }
     };
 
@@ -67,3 +69,5 @@ function fetchAndDisplayRecipe() {
         console.error("No recipe ID found in the URL");
     }
 }
+
+
