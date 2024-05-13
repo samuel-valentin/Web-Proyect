@@ -104,7 +104,7 @@ function login(event) {
             sessionStorage.setItem('user', JSON.stringify(data.user));
             
             alert("Login successful!");
-            window.location.href = "https://web-proyect.onrender.com:3000/profile";
+            window.location.href = "https://web-proyect.onrender.com/profile";
         } else if (password == 'fake'){
             alert("Login failed: " + "Incorrect Password");
         }else{
